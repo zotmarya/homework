@@ -1,6 +1,5 @@
-package edu.hw1.test3;
+package edu.hw1.task3;
 
-import edu.hw1.task3.Task3;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
