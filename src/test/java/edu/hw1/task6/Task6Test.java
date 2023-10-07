@@ -1,13 +1,20 @@
 package edu.hw1.task6;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class Task6Test {
 
+    Task6 task6;
+
+    @BeforeEach
+    void setUp() {
+        task6 = new Task6();
+    }
+
     @Test
     void correctNumber() {
-        Task6 task6 = new Task6();
 
         int number = 6621;
 
@@ -18,7 +25,6 @@ class Task6Test {
 
     @Test
     void lessThanThousand() {
-        Task6 task6 = new Task6();
 
         int number = 123;
 
@@ -29,7 +35,6 @@ class Task6Test {
 
     @Test
     void moreThanThousand() {
-        Task6 task6 = new Task6();
 
         int number = 12345678;
 
@@ -40,7 +45,6 @@ class Task6Test {
 
     @Test
     void sameDigits() {
-        Task6 task6 = new Task6();
 
         int number = 4444;
 
@@ -51,7 +55,6 @@ class Task6Test {
 
     @Test
     void numberKaprekar() {
-        Task6 task6 = new Task6();
 
         int number = 6174;
 

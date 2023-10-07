@@ -1,14 +1,20 @@
 package edu.hw1.task4;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class Task4Test {
 
+    Task4 task4;
+
+    @BeforeEach
+    void setUp() {
+        task4 = new Task4();
+    }
+
     @Test
     void mixedString() {
-        Task4 task4 = new Task4();
-
         String mixedString = "hTsii  s aimex dpus rtni.g";
 
         String fixedString = task4.fixString(mixedString);
@@ -18,8 +24,6 @@ class Task4Test {
 
     @Test
     void emptyString() {
-        Task4 task4 = new Task4();
-
         String mixedString = "";
 
         String fixedString = task4.fixString(mixedString);
@@ -29,8 +33,6 @@ class Task4Test {
 
     @Test
     void oneSymbolString() {
-        Task4 task4 = new Task4();
-
         String mixedString = "2";
 
         String fixedString = task4.fixString(mixedString);
@@ -40,8 +42,6 @@ class Task4Test {
 
     @Test
     void oddSymbolsString() {
-        Task4 task4 = new Task4();
-
         String mixedString = "badce";
 
         String fixedString = task4.fixString(mixedString);
