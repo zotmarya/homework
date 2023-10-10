@@ -38,7 +38,7 @@ public class Task6 {
 
         char[] digitsToTransfer = String.valueOf(number).toCharArray();
 
-        for (int i = digitsToTransfer.length - 1, j = digits.length; i >= 0; i--, j--) {
+        for (int i = digitsToTransfer.length - 1, j = digits.length - 1; i >= 0; i--, j--) {
             digits[j] = digitsToTransfer[i] - '0';
         }
 
