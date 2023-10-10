@@ -10,8 +10,8 @@ public class Task7 {
 //        return number >> shift | number << (intBitSize - shift);
 //    }
 
-    private final int intBitSize = 32;
-    private final String exceptionMessage = "Argument(s) can't be negative.";
+    private final static int INT_BIT_SIZE = 32;
+    private final static String EXCEPTION_MESSAGE = "Argument(s) can't be negative.";
 
     public int rotateBitsRight(int number, int shift) {
 
@@ -20,14 +20,14 @@ public class Task7 {
         }
 
         if (number < 0 || shift < 0) {
-            throw new IllegalArgumentException(exceptionMessage);
+            throw new IllegalArgumentException(EXCEPTION_MESSAGE);
         }
 
         int leftBitPosition = findLeftmostBitPosition(number);
 
         int shiftModulo = shift % leftBitPosition;
 
-        return number >>> shiftModulo | (number << (intBitSize - shiftModulo)) >>> (intBitSize - leftBitPosition);
+        return number >>> shiftModulo | (number << (INT_BIT_SIZE - shiftModulo)) >>> (INT_BIT_SIZE - leftBitPosition);
     }
 
     public int rotateBitsLeft(int number, int shift) {
@@ -37,7 +37,7 @@ public class Task7 {
         }
 
         if (number < 0 || shift < 0) {
-            throw new IllegalArgumentException(exceptionMessage);
+            throw new IllegalArgumentException(EXCEPTION_MESSAGE);
         }
 
         int leftBitPosition = findLeftmostBitPosition(number);
@@ -46,7 +46,7 @@ public class Task7 {
 
         shiftModulo = leftBitPosition - shiftModulo;
 
-        return number >>> shiftModulo | (number << (intBitSize - shiftModulo)) >>> (intBitSize - leftBitPosition);
+        return number >>> shiftModulo | (number << (INT_BIT_SIZE - shiftModulo)) >>> (INT_BIT_SIZE - leftBitPosition);
     }
 
     private int findLeftmostBitPosition(int number) {
