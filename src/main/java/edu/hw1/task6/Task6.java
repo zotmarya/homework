@@ -31,8 +31,10 @@ public class Task6 {
         return stepsCountForK(number);
     }
 
+    private final static int DIGITS_IN_NUMBER = 4;
+
     private int stepsCountForK(int number) {
-        int[] digits = new int[4];
+        int[] digits = new int[DIGITS_IN_NUMBER];
 
         char[] digitsToTransfer = String.valueOf(number).toCharArray();
 
