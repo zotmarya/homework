@@ -19,7 +19,7 @@ public class Task5 {
             }
             descendant = createDescendant(digits);
 
-            if (descendant <= maxDigit) {
+            if (descendant <= MAX_DIGIT) {
                 return false;
             }
         }
@@ -36,10 +36,10 @@ public class Task5 {
         return true;
     }
 
-    private final int multiplyTen = 10;
-    private final int multiplyHundred = 100;
+    private final static int MULTIPLY_TEN = 10;
+    private final static int MULTIPLY_HUNDRED = 100;
 
-    private final int maxDigit = 9;
+    private final static int MAX_DIGIT = 9;
 
     private int createDescendant(char[] digits) {
         int number = 0;
@@ -47,7 +47,7 @@ public class Task5 {
         for (int i = 0; i < digits.length; i += 2) {
             int sum = (digits[i] - '0') + (digits[i + 1] - '0');
 
-            number = number * (sum > maxDigit ? multiplyHundred : multiplyTen) + sum;
+            number = number * (sum > MAX_DIGIT ? MULTIPLY_HUNDRED : MULTIPLY_TEN) + sum;
 
         }
 
