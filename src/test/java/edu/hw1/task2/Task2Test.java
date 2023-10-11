@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class Task2Test {
 
-    Task2 task2;
+    private Task2 task2;
 
     @BeforeEach
     void setUp() {
@@ -14,7 +14,7 @@ class Task2Test {
     }
 
     @Test
-    void countDigitsForNumber() {
+    void digitsCount_WhenCorrectFormatOfNumber_CountsDigits() {
         int number = 4666;
 
         int digitsAmount = task2.digitsCount(number);
@@ -24,7 +24,7 @@ class Task2Test {
     }
 
     @Test
-    void negativeNumber() {
+    void digitsCount_WhenNegativeNumber_CountsDigitsIgnoringMinus() {
         int number = -544;
 
         int digitsAmount = task2.digitsCount(number);
@@ -34,7 +34,7 @@ class Task2Test {
     }
 
     @Test
-    void inputZero() {
+    void digitsCount_WhenInputZero_ReturnsOne() {
         int number = 0;
 
         int digitsAmount = task2.digitsCount(number);
@@ -44,7 +44,7 @@ class Task2Test {
     }
 
     @Test
-    void inputMaxInteger() {
+    void digitsCount_WhenInputMaxInteger_ReturnsTen() {
         int number = Integer.MAX_VALUE;
 
         int digitsAmount = task2.digitsCount(number);

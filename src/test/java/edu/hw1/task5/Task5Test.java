@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class Task5Test {
 
-    Task5 task5;
+    private Task5 task5;
 
     @BeforeEach
     void setUp() {
@@ -14,7 +14,7 @@ class Task5Test {
     }
 
     @Test
-    void palindromeNumber() {
+    void isNumOrDescendantPalindrome_WhenPalindromeNumber_ReturnsTrue() {
         int number = 11211230;
 
         boolean isPalindrome = task5.isNumOrDescendantPalindrome(number);
@@ -23,7 +23,7 @@ class Task5Test {
     }
 
     @Test
-    void negativeNumber() {
+    void isNumOrDescendantPalindrome_WhenNegativeNumber_ReturnsFalse() {
         int number = -2222;
 
         boolean isPalindrome = task5.isNumOrDescendantPalindrome(number);
@@ -32,7 +32,7 @@ class Task5Test {
     }
 
     @Test
-    void oddLengthPalindromeNumber() {
+    void isNumOrDescendantPalindrome_WhenOddLengthPalindromeNumber_ReturnsTrue() {
         int number = 363;
 
         boolean isPalindrome = task5.isNumOrDescendantPalindrome(number);
@@ -41,7 +41,7 @@ class Task5Test {
     }
 
     @Test
-    void oddLengthNotPalindromeNumber() {
+    void isNumOrDescendantPalindrome_WhenOddLengthNotPalindromeNumber_ReturnsFalse() {
         int number = 123;
 
         boolean isPalindrome = task5.isNumOrDescendantPalindrome(number);
@@ -50,7 +50,7 @@ class Task5Test {
     }
 
     @Test
-    void oneDigitNumber() {
+    void isNumOrDescendantPalindrome_WhenOneDigitNumber_ReturnsTrue() {
         int number = 1;
 
         boolean isPalindrome = task5.isNumOrDescendantPalindrome(number);
@@ -59,7 +59,7 @@ class Task5Test {
     }
 
     @Test
-    void oneDigitNumberDescendant() {
+    void isNumOrDescendantPalindrome_WhenOneDigitNumberDescendant_ReturnsFalse() {
         int number = 18;
 
         boolean isPalindrome = task5.isNumOrDescendantPalindrome(number);

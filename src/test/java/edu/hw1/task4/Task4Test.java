@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class Task4Test {
 
-    Task4 task4;
+    private Task4 task4;
 
     @BeforeEach
     void setUp() {
@@ -14,7 +14,7 @@ class Task4Test {
     }
 
     @Test
-    void mixedString() {
+    void fixString_WhenMixedString_FixesString() {
         String mixedString = "hTsii  s aimex dpus rtni.g";
 
         String fixedString = task4.fixString(mixedString);
@@ -23,7 +23,7 @@ class Task4Test {
     }
 
     @Test
-    void emptyString() {
+    void fixString_WhenEmptyString_ReturnsEmptyString() {
         String mixedString = "";
 
         String fixedString = task4.fixString(mixedString);
@@ -32,7 +32,7 @@ class Task4Test {
     }
 
     @Test
-    void oneSymbolString() {
+    void fixString_WhenOneSymbolString_ReturnsSameString() {
         String mixedString = "2";
 
         String fixedString = task4.fixString(mixedString);
@@ -41,7 +41,7 @@ class Task4Test {
     }
 
     @Test
-    void oddSymbolsString() {
+    void fixString_WhenOddSymbolsString_FixesString() {
         String mixedString = "badce";
 
         String fixedString = task4.fixString(mixedString);

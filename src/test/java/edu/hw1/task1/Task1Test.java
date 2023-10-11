@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class Task1Test {
-    Task1 task1;
+    private Task1 task1;
 
     @BeforeEach
     void setUp() {
@@ -13,7 +13,7 @@ class Task1Test {
     }
 
     @Test
-    void timeToSecondsInGivenFormat() {
+    void timeToSeconds_WhenTimeIsInCorrectFormat_ConvertsToSeconds() {
         String time = "13:56";
 
         int timeInSeconds = task1.timeToSeconds(time);
@@ -22,7 +22,7 @@ class Task1Test {
     }
 
     @Test
-    void timeToSecondsWithExtraMinutes() {
+    void timeToSeconds_WhenTimeWithExtraMinutes_ConvertsToSeconds() {
         String time = "999:59";
 
         int timeInSeconds = task1.timeToSeconds(time);
@@ -31,7 +31,7 @@ class Task1Test {
     }
 
     @Test
-    void incorrectFormatOfSeconds() {
+    void timeToSeconds_WhenIncorrectFormatOfSeconds_CannotBeConverted() {
         String time = "10:60";
 
         int result = task1.timeToSeconds(time);
@@ -40,7 +40,7 @@ class Task1Test {
     }
 
     @Test
-    void incorrectFormatOfMinutes() {
+    void timeToSeconds_WhenIncorrectFormatOfMinutes_CannotBeConverted() {
         String time = "1:10";
 
         int result = task1.timeToSeconds(time);
@@ -49,7 +49,7 @@ class Task1Test {
     }
 
     @Test
-    void incorrectAmountOfColons() {
+    void timeToSeconds_WhenIncorrectAmountOfColons_CannotBeConverted() {
         String time = "10:60:00";
 
         int result = task1.timeToSeconds(time);
@@ -58,7 +58,7 @@ class Task1Test {
     }
 
     @Test
-    void incorrectInput() {
+    void timeToSeconds_WhenIncorrectInput_CannotBeConverted() {
         String time = "abc";
 
         int result = task1.timeToSeconds(time);
@@ -67,7 +67,7 @@ class Task1Test {
     }
 
     @Test
-    void unwantedSymbol() {
+    void timeToSeconds_WhenUnwantedSymbol_CannotBeConverted() {
         String time = "-07:01";
 
         int result = task1.timeToSeconds(time);

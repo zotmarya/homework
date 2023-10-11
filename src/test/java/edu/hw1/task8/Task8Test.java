@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class Task8Test {
-    Task8 task8;
+    private Task8 task8;
 
     @BeforeEach
     void setUp() {
@@ -13,7 +13,7 @@ class Task8Test {
     }
 
     @Test
-    void checkIfTheyAreSafe() {
+    void areKnightsSafe_WhenKnightsAreSafe_ReturnsTrue() {
         int[][] chessBoard = {
             {0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -31,7 +31,7 @@ class Task8Test {
     }
 
     @Test
-    void checkIfTheyAreNotSafe() {
+    void areKnightsSafe_WhenKnightsAreNotSafe_ReturnsFalse() {
         int[][] chessBoard = {
             {1, 0, 1, 0, 1, 0, 1, 0},
             {0, 1, 0, 1, 0, 1, 0, 1},

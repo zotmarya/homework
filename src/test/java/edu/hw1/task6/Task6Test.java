@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class Task6Test {
 
-    Task6 task6;
+    private Task6 task6;
 
     @BeforeEach
     void setUp() {
@@ -14,7 +14,7 @@ class Task6Test {
     }
 
     @Test
-    void correctNumber() {
+    void countK_WhenCorrectNumber_CountsSteps() {
 
         int number = 6621;
 
@@ -24,7 +24,7 @@ class Task6Test {
     }
 
     @Test
-    void lessThanThousand() {
+    void countK_WhenLessThanThousand_ReturnsMinusOne() {
 
         int number = 123;
 
@@ -34,7 +34,7 @@ class Task6Test {
     }
 
     @Test
-    void moreThanThousand() {
+    void countK_WhenMoreThanThousand_ReturnsMinusOne() {
 
         int number = 12345678;
 
@@ -44,7 +44,7 @@ class Task6Test {
     }
 
     @Test
-    void sameDigits() {
+    void countK_WhenSameDigits_ReturnsMinusOne() {
 
         int number = 4444;
 
@@ -54,7 +54,7 @@ class Task6Test {
     }
 
     @Test
-    void numberKaprekar() {
+    void countK_WhenNumberKaprekar_ReturnsZero() {
 
         int number = 6174;
 

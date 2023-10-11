@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task3Test {
 
-    Task3 task3;
+    private Task3 task3;
 
     @BeforeEach
     void setUp() {
@@ -14,7 +14,7 @@ public class Task3Test {
     }
 
     @Test
-    void sortedArrays() {
+    void isNestable_WhenSortedArrays_ReturnsTrue() {
         int[] array1 = {1, 2, 3, 4};
         int[] array2 = {0, 6};
 
@@ -24,7 +24,7 @@ public class Task3Test {
     }
 
     @Test
-    void notSortedArrays() {
+    void isNestable_WhenNotSortedArrays_ReturnsTrue() {
         int[] array1 = {3, 1};
         int[] array2 = {4, 0};
 
@@ -34,7 +34,7 @@ public class Task3Test {
     }
 
     @Test
-    void equalValuesArrays() {
+    void isNestable_WhenEqualValuesArrays_ReturnsFalse() {
         int[] array1 = {9, 9, 8};
         int[] array2 = {8, 9};
 
@@ -44,7 +44,7 @@ public class Task3Test {
     }
 
     @Test
-    void notNestableArrays() {
+    void isNestable_WhenArraysDoNotMeetCriteria_ReturnsFalse() {
         int[] array1 = {1, 2, 3, 4};
         int[] array2 = {2, 3};
 
@@ -54,7 +54,7 @@ public class Task3Test {
     }
 
     @Test
-    void emptyFirstArray() {
+    void isNestable_WhenEmptyFirstArray_ReturnsTrue() {
         int[] array1 = {};
         int[] array2 = {1, 3, 6, 7};
 
@@ -64,7 +64,7 @@ public class Task3Test {
     }
 
     @Test
-    void emptySecondArray() {
+    void isNestable_WhenSecondArrayEmpty_ReturnsFalse() {
         int[] array1 = {1, 2};
         int[] array2 = {};
 
@@ -74,7 +74,7 @@ public class Task3Test {
     }
 
     @Test
-    void emptyBothArrays() {
+    void isNestable_WhenBothArraysEmpty_ReturnsFalse() {
         int[] array1 = {};
         int[] array2 = {};
 

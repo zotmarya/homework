@@ -14,7 +14,7 @@ class Task7Test {
     private Task7 task7;
 
     @Test
-    void shiftBitsLeft() {
+    void rotateBitsLeft_WhenPositiveNumberAndShift_ReturnsCorrectNumber() {
         int number = 17;
         int shift = 2;
 
@@ -24,7 +24,7 @@ class Task7Test {
     }
 
     @Test
-    void shiftBitsRight() {
+    void rotateBitsRight_WhenPositiveNumberAndShift_ReturnsCorrectNumber() {
         int number = 45;
         int shift = 3;
 
@@ -34,7 +34,7 @@ class Task7Test {
     }
 
     @Test
-    void negativeShiftForLeft() {
+    void rotateBitsLeft_WhenNegativeShift_ThrowsException() {
         int number = 4;
         int shift = -3;
 
@@ -42,7 +42,7 @@ class Task7Test {
     }
 
     @Test
-    void negativeShiftForRight() {
+    void rotateBitsRight_WhenNegativeShift_ThrowsException() {
         int number = 11;
         int shift = -1;
 
@@ -50,7 +50,7 @@ class Task7Test {
     }
 
     @Test
-    void negativeNumberForLeft() {
+    void rotateBitsLeft_WhenNegativeNumber_ThrowsException() {
         int number = -30;
         int shift = 8;
 
@@ -58,7 +58,7 @@ class Task7Test {
     }
 
     @Test
-    void negativeNumberForRight() {
+    void rotateBitsRight_WhenNegativeNumber_ThrowsException() {
         int number = -10;
         int shift = 4;
 
@@ -66,7 +66,7 @@ class Task7Test {
     }
 
     @Test
-    void zeroNumber() {
+    void rotateBitsRight_WhenZeroNumber_ReturnsZero() {
         int number = 0;
         int shift = 4;
 
@@ -76,7 +76,7 @@ class Task7Test {
     }
 
     @Test
-    void zeroShift() {
+    void rotateBitsRight_WhenZeroShift_ReturnsSameNumber() {
         int number = 103;
         int shift = 0;
 
@@ -86,7 +86,7 @@ class Task7Test {
     }
 
     @Test
-    void allBitsOn() {
+    void rotateBitsRight_WhenAllBitsOn_ReturnsSameNumber() {
         int number = 127;
         int shift = 3;
 
