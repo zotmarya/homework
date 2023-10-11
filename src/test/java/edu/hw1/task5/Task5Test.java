@@ -2,6 +2,8 @@ package edu.hw1.task5;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class Task5Test {
@@ -13,10 +15,9 @@ class Task5Test {
         task5 = new Task5();
     }
 
-    @Test
-    void isNumOrDescendantPalindrome_WhenPalindromeNumber_ReturnsTrue() {
-        int number = 11211230;
-
+    @ParameterizedTest
+    @ValueSource(ints = {11211230, 13001120, 23336014, 11})
+    void isNumOrDescendantPalindrome_WhenPalindromeNumber_ReturnsTrue(int number) {
         boolean isPalindrome = task5.isNumOrDescendantPalindrome(number);
 
         assertThat(isPalindrome).isTrue();

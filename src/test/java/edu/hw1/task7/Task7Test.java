@@ -2,6 +2,8 @@ package edu.hw1.task7;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -13,24 +15,20 @@ class Task7Test {
 
     private Task7 task7;
 
-    @Test
-    void rotateBitsLeft_WhenPositiveNumberAndShift_ReturnsCorrectNumber() {
-        int number = 17;
-        int shift = 2;
-
+    @ParameterizedTest
+    @CsvSource({"17,2,6", "16,1,1", "17,2,6"})
+    void rotateBitsLeft_WhenPositiveNumberAndShift_ReturnsCorrectNumber(int number, int shift, int expectedNumber) {
         int shiftedNumber = task7.rotateBitsLeft(number, shift);
 
-        assertThat(shiftedNumber).isEqualTo(6);
+        assertThat(shiftedNumber).isEqualTo(expectedNumber);
     }
 
-    @Test
-    void rotateBitsRight_WhenPositiveNumberAndShift_ReturnsCorrectNumber() {
-        int number = 45;
-        int shift = 3;
-
+    @ParameterizedTest
+    @CsvSource({"45,3,45", "8,1,4"})
+    void rotateBitsRight_WhenPositiveNumberAndShift_ReturnsCorrectNumber(int number, int shift, int expectedNumber) {
         int shiftedNumber = task7.rotateBitsRight(number, shift);
 
-        assertThat(shiftedNumber).isEqualTo(45);
+        assertThat(shiftedNumber).isEqualTo(expectedNumber);
     }
 
     @Test

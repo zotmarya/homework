@@ -2,6 +2,8 @@ package edu.hw1.task2;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class Task2Test {
@@ -13,13 +15,12 @@ class Task2Test {
         task2 = new Task2();
     }
 
-    @Test
-    void digitsCount_WhenCorrectFormatOfNumber_CountsDigits() {
-        int number = 4666;
-
+    @ParameterizedTest
+    @CsvSource({"4666,4", "544,3", "0,1"})
+    void digitsCount_WhenCorrectFormatOfNumber_CountsDigits(int number, int expectedDigitsAmount) {
         int digitsAmount = task2.digitsCount(number);
 
-        assertThat(digitsAmount).isEqualTo(4);
+        assertThat(digitsAmount).isEqualTo(expectedDigitsAmount);
 
     }
 
@@ -30,16 +31,6 @@ class Task2Test {
         int digitsAmount = task2.digitsCount(number);
 
         assertThat(digitsAmount).isEqualTo(3);
-
-    }
-
-    @Test
-    void digitsCount_WhenInputZero_ReturnsOne() {
-        int number = 0;
-
-        int digitsAmount = task2.digitsCount(number);
-
-        assertThat(digitsAmount).isEqualTo(1);
 
     }
 

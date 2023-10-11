@@ -2,6 +2,8 @@ package edu.hw1.task4;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class Task4Test {
@@ -22,13 +24,12 @@ class Task4Test {
         assertThat(fixedString).isEqualTo("This is a mixed up string.");
     }
 
-    @Test
-    void fixString_WhenEmptyString_ReturnsEmptyString() {
-        String mixedString = "";
+    @ParameterizedTest
+    @EmptySource
+    void fixString_WhenEmptyString_ReturnsEmptyString(String emptyString) {
+        String fixedString = task4.fixString(emptyString);
 
-        String fixedString = task4.fixString(mixedString);
-
-        assertThat(fixedString).isEqualTo("");
+        assertThat(fixedString).isEmpty();
     }
 
     @Test

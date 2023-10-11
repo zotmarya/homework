@@ -2,6 +2,8 @@ package edu.hw1.task1;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class Task1Test {
@@ -12,13 +14,12 @@ class Task1Test {
         task1 = new Task1();
     }
 
-    @Test
-    void timeToSeconds_WhenTimeIsInCorrectFormat_ConvertsToSeconds() {
-        String time = "13:56";
-
+    @ParameterizedTest
+    @CsvSource({"13:56,836", "01:00,60"})
+    void timeToSeconds_WhenTimeIsInCorrectFormat_ConvertsToSeconds(String time, int expectedSeconds) {
         int timeInSeconds = task1.timeToSeconds(time);
 
-        assertThat(timeInSeconds).isEqualTo(836);
+        assertThat(timeInSeconds).isEqualTo(expectedSeconds);
     }
 
     @Test
