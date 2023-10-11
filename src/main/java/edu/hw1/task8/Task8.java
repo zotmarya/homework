@@ -4,7 +4,7 @@ public class Task8 {
 
     private final static int CHESS_BOARD_SIZE = 8;
 
-    public boolean isOnBoard(int x, int y) {
+    private boolean isOnBoard(int x, int y) {
         return (x >= 0 && x < CHESS_BOARD_SIZE && y >= 0 && y < CHESS_BOARD_SIZE);
     }
 
