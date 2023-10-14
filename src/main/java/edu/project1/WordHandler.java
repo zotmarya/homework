@@ -41,4 +41,8 @@ public class WordHandler {
     public char[] getGuessedLetters() {
         return guessedLetters;
     }
+
+    public String getGuessedLettersString() {
+        return new String(guessedLetters);
+    }
 }
