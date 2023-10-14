@@ -1,5 +1,7 @@
 package edu.project1;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -7,31 +9,33 @@ import java.util.Scanner;
 
 public class HangmanGame {
 
-    static final ArrayList<String> words = new ArrayList<>(Arrays.asList("AMAZING", "CAT"));
-    static final int wordsAmount = 2;
+    private static final ArrayList<String> WORDS = new ArrayList<>(Arrays.asList("AMAZING", "CAT", "POWER"));
+    private static final int WORDS_AMOUNT = 2;
 
-    static int mistakesMade = 0;
-    static final int maxMistakes = 5;
+    private static final int MAX_MISTAKES = 5;
 
-    static int guessedAmount = 0;
+    private static int mistakesMade = 0;
+
+    private static int guessedAmount = 0;
+
+    private static Logger LOGGER = LogManager.getLogger();
 
     public static void main(String[] args) {
         HangmanPicture hangmanPictureGenerator = new HangmanPicture();
         Random random = new Random();
-        WordHandler wordHandler = new WordHandler(words.get(random.nextInt(wordsAmount)));
+        WordHandler wordHandler = new WordHandler(WORDS.get(random.nextInt(WORDS_AMOUNT)));
 
         Scanner scanner = new Scanner(System.in);
 
         char yourLetter;
 
         while (true) {
-            System.out.println("____________________________________________________");
-            System.out.println(hangmanPictureGenerator.getHangmanPicture(mistakesMade));
-            System.out.println(wordHandler.getGuessedLetters());
-            System.out.println("GUESS A LETTER: ");
+            LOGGER.info(hangmanPictureGenerator.getHangmanPicture(mistakesMade));
+            LOGGER.info(wordHandler.getGuessedLettersString());
+            LOGGER.info("GUESS A LETTER: ");
 
             while (!scanner.hasNext("[a-z]|[A-Z]")) {
-                System.out.println("WRITE ENGLISH LETTERS.");
+                LOGGER.info("WRITE ENGLISH LETTERS.");
                 scanner.nextLine();
             }
 
@@ -39,23 +43,23 @@ public class HangmanGame {
 
             String result = wordHandler.checkIfGuessedLetter(yourLetter);
 
-            System.out.println(result);
+            LOGGER.info(result);
 
             if (result.charAt(0) == 'N') {
                 mistakesMade++;
 
-                if(mistakesMade ==  maxMistakes) {
-                    System.out.println(hangmanPictureGenerator.getHangmanPicture(mistakesMade));
-                    System.out.println(youLost());
+                if (mistakesMade == MAX_MISTAKES) {
+                    LOGGER.info(hangmanPictureGenerator.getHangmanPicture(mistakesMade));
+                    LOGGER.info(youLost());
 
                     return;
                 }
             } else if (result.charAt(0) == 'C') {
                 guessedAmount++;
 
-                if(guessedAmount == wordHandler.getWordLen()) {
-                    System.out.println(wordHandler.getGuessedLetters());
-                    System.out.println(youWon());
+                if (guessedAmount == wordHandler.getWordLen()) {
+                    LOGGER.info(wordHandler.getGuessedLetters());
+                    LOGGER.info(youWon());
 
                     return;
                 }
@@ -65,12 +69,12 @@ public class HangmanGame {
 
     }
 
-    public static String youWon() {
-        return "YOU WON!";
+    private static String youWon() {
+        return "YOU WON!🥳";
     }
 
-    public static String youLost() {
-        return "YOU LOST!";
+    private static String youLost() {
+        return "YOU LOST!😦";
     }
 
 }
