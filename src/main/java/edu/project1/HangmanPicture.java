@@ -17,6 +17,7 @@ public class HangmanPicture {
 
     private final String hangmanZero =
         """
+                       \n
                        __________HANGMAN__________
                        |                     |
                        |
@@ -39,6 +40,7 @@ public class HangmanPicture {
 
     private final String hangmanOne =
         """
+                       \n
                        __________HANGMAN__________
                        |                     |
                        |                     |
@@ -61,6 +63,7 @@ public class HangmanPicture {
 
     private final String hangmanTwo =
         """
+                \n
 
                 __________HANGMAN__________
                 |                     |
@@ -84,6 +87,7 @@ public class HangmanPicture {
 
     private final String hangmanThree =
             """
+                       \n
 
                        __________HANGMAN__________
                        |                     |
@@ -107,6 +111,7 @@ public class HangmanPicture {
 
     private final String hangmanFour =
         """
+                       \n
 
                        __________HANGMAN__________
                        |                     |
@@ -130,6 +135,7 @@ public class HangmanPicture {
 
     private final String hangmanFive =
        """
+               \n
 
                __________HANGMAN__________
                |                     |
