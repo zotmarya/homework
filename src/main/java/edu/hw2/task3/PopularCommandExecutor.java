@@ -23,9 +23,6 @@ public class PopularCommandExecutor {
             try (Connection connection = manager.getConnection()) {
                 connection.execute(command);
                 return;
-            } catch (ConnectionException exception) {
-                LOGGER.info(exception);
-                cause = exception;
             } catch (Exception exception) {
                 LOGGER.info(exception);
                 cause = exception;
