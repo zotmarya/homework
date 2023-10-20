@@ -1,7 +1,6 @@
 package edu.hw2.task4;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CallingInfoTest {
