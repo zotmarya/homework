@@ -6,7 +6,7 @@ public record CallingInfo(String className, String methodName) {
         Throwable throwable = new Throwable();
         StackTraceElement[] stack = throwable.getStackTrace();
 
-        int lastStackElement = stack.length - 1;
+        int lastStackElement = 1;
 
         return new CallingInfo(stack[lastStackElement].getClassName(), stack[lastStackElement].getMethodName());
     }

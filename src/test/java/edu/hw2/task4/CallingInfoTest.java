@@ -9,7 +9,7 @@ public class CallingInfoTest {
         CallingInfo callingInfo = CallingInfo.callingInfo();
 
         assertThat(callingInfo.className() + " " + callingInfo.methodName()).isEqualTo(
-            "com.intellij.rt.junit.JUnitStarter" + " " + "main");
+            "edu.hw2.task4.CallingInfoTest callingInfo_WhenCalled_ReturnsClassAndMethodName");
     }
 
 }
