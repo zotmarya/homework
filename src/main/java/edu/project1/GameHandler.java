@@ -20,10 +20,6 @@ public class GameHandler {
     private GameHandler() {
     }
 
-    public WordHandler getWordHandler() {
-        return wordHandler;
-    }
-
     public Player getPlayer() {
         return player;
     }
@@ -60,9 +56,9 @@ public class GameHandler {
     }
 
     public void playerMakesChoice() {
-        readChoice();
+        int playerChoice = readChoice();
 
-        switch (player.getPlayerChoice()) {
+        switch (playerChoice) {
             case 1 -> {
                 prepareForNewGame();
                 playRound();
@@ -72,7 +68,7 @@ public class GameHandler {
         }
     }
 
-    private void readChoice() {
+    private int readChoice() {
         int choice = 0;
 
         while (choice != 1 && choice != 2) {
@@ -92,7 +88,7 @@ public class GameHandler {
             }
         }
 
-        player.setPlayerChoice(choice);
+        return choice;
     }
 
     private static final String BYE_MESSAGE = "GOOD BYE!😁";
@@ -162,6 +158,7 @@ public class GameHandler {
                 string = BUFFERED_READER.readLine().trim().toUpperCase();
 
                 if (string.equals("I SURRENDER")) {
+                    reactToPlayerSurrendered();
                     player.setPlaying(false);
                     return '/';
                 }

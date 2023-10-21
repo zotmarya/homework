@@ -4,7 +4,6 @@ public class Player {
     private static Player player;
     private int mistakesMade;
     private int guessedLettersAmount;
-    private int playerChoice;
     private boolean isPlaying;
 
     public static Player getInstance() {
@@ -21,14 +20,6 @@ public class Player {
 
     public int getGuessedLettersAmount() {
         return guessedLettersAmount;
-    }
-
-    public int getPlayerChoice() {
-        return playerChoice;
-    }
-
-    public void setPlayerChoice(int playerChoice) {
-        this.playerChoice = playerChoice;
     }
 
     public void increaseMistakesMadeByOne() {
