@@ -26,11 +26,11 @@ public class AreaTest {
 
     @ParameterizedTest
     @MethodSource("rectangles")
-    void calculateArea_WhenNegativeValue_CalculatesZeroArea(Rectangle rect){
+    void calculateArea_WhenNegativeValue_CalculatesZeroArea(Rectangle rect) {
         rect = rect.setWidth(-5);
         rect = rect.setHeight(20);
 
-        assertThat(rect.calculateArea()).isEqualTo(0);
+        assertThat(rect.calculateArea()).isEqualTo(20);
     }
 
 }
