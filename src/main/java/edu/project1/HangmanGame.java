@@ -5,7 +5,7 @@ public class HangmanGame {
 
     @SuppressWarnings("UncommentedMain")
     public static void main(String[] args) {
-        GAME_HANDLER.startGame();
+        GAME_HANDLER.initialize();
 
         while (true) {
             GAME_HANDLER.printMenu();

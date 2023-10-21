@@ -5,8 +5,6 @@ public class Player {
     private int mistakesMade;
     private int guessedLettersAmount;
     private int playerChoice;
-
-    private char playerLetter;
     private boolean isPlaying;
 
     public static Player getInstance() {
@@ -23,14 +21,6 @@ public class Player {
 
     public int getGuessedLettersAmount() {
         return guessedLettersAmount;
-    }
-
-    public char getPlayerLetter() {
-        return playerLetter;
-    }
-
-    public void setPlayerLetter(char playerLetter) {
-        this.playerLetter = playerLetter;
     }
 
     public int getPlayerChoice() {
@@ -60,6 +50,7 @@ public class Player {
     public void newGame() {
         mistakesMade = 0;
         guessedLettersAmount = 0;
+        isPlaying = true;
     }
 
     private Player() {

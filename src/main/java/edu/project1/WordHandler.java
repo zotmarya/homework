@@ -46,6 +46,7 @@ public class WordHandler {
     }
 
     private static final int MAX_WORD_LENGTH = 20;
+    private static final int MIN_WORD_LENGTH = 3;
 
     private void readTxtFileWithWordsToGuess() {
         try (
@@ -54,7 +55,7 @@ public class WordHandler {
             String line;
 
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.length() <= MAX_WORD_LENGTH) {
+                if (line.length() <= MAX_WORD_LENGTH && line.length() >= MIN_WORD_LENGTH) {
                     words.add(line.trim().toUpperCase());
                 }
             }
@@ -68,6 +69,10 @@ public class WordHandler {
     }
 
     public void setNewWord(String word) {
+        if (word.length() > MAX_WORD_LENGTH || word.length() < MIN_WORD_LENGTH) {
+            setRandomWord();
+        }
+
         this.word = word;
         this.wordSymbols = word.toCharArray();
         guessedLetters = new char[wordSymbols.length];
@@ -102,6 +107,10 @@ public class WordHandler {
     }
 
     public int checkIfPlayerGuessedLetter(char letter) {
+        if (lettersUsedMap.get(letter)) {
+            return 0;
+        }
+
         int guessedAmount = 0;
         boolean hasGuessed = false;
 
@@ -109,10 +118,6 @@ public class WordHandler {
 
         for (int i = 0; i < wordSymbols.length; i++) {
             if (letter == wordSymbols[i]) {
-                if (guessedLetters[i] == letter) {
-                    return 0;
-                }
-
                 guessedLetters[i] = wordSymbols[i];
                 guessedAmount++;
 

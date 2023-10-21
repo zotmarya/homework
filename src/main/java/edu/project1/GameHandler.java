@@ -6,19 +6,26 @@ import java.io.InputStreamReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 public class GameHandler {
     private static GameHandler gameHandler;
-    private static HangmanPictureHandler hangmanPictureGenerator;
-    private static Player player;
-    private static Menu menu;
-    private static WordHandler wordHandler;
+    private HangmanPictureHandler hangmanPictureGenerator;
+    private Player player;
+    private Menu menu;
+    private WordHandler wordHandler;
     private static final Logger LOGGER = LogManager.getLogger();
     private static final BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
 
     public static final int MAX_MISTAKES = 5;
 
     private GameHandler() {
+    }
+
+    public WordHandler getWordHandler() {
+        return wordHandler;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public static GameHandler getInstance() {
@@ -29,11 +36,7 @@ public class GameHandler {
         return gameHandler;
     }
 
-    public void startGame() {
-        initialize();
-    }
-
-    private void initialize() {
+    public void initialize() {
         hangmanPictureGenerator = HangmanPictureHandler.getInstance();
         player = Player.getInstance();
         menu = Menu.getInstance();
@@ -44,9 +47,15 @@ public class GameHandler {
         LOGGER.info(menu.outputMenu() + menu.askForPlayerChoice());
     }
 
-    private void prepareForNewGame() {
+    public void prepareForNewGame() {
         player.newGame();
         wordHandler.setRandomWord();
+        wordHandler.fillHashMap();
+    }
+
+    public void prepareForNewGame(String word) {
+        player.newGame();
+        wordHandler.setNewWord(word);
         wordHandler.fillHashMap();
     }
 
@@ -55,9 +64,7 @@ public class GameHandler {
 
         switch (player.getPlayerChoice()) {
             case 1 -> {
-
                 prepareForNewGame();
-                player.setPlaying(true);
                 playRound();
             }
             case 2 -> exitGame();
@@ -88,37 +95,40 @@ public class GameHandler {
         player.setPlayerChoice(choice);
     }
 
-    private static final String BYE_MESSAGE = "Good bye!😁";
+    private static final String BYE_MESSAGE = "GOOD BYE!😁";
 
     private void exitGame() {
         LOGGER.info(BYE_MESSAGE);
         System.exit(0);
     }
 
-    private static final String ALREADY_GUESSED_RESPONSE = "YOU'VE ALREADY GUESSED THIS LETTER 🤔";
+    private static final String ALREADY_TRIED_RESPONSE = "YOU'VE ALREADY TRIED THIS LETTER 🤔";
 
     private void playRound() {
         while (player.isPlaying()) {
             printCurrentGameState();
 
-            playerGuessesLetter();
+            char playerLetter = playerInputsLetter();
 
-            if (!player.isPlaying()) {
-                reactToPlayerSurrendered();
+            if (playerLetter == '/') {
                 return;
             }
 
-            int guessedLettersAmount = wordHandler.checkIfPlayerGuessedLetter(player.getPlayerLetter());
+            int guessedLettersAmount = wordHandler.checkIfPlayerGuessedLetter(playerLetter);
 
-            if (guessedLettersAmount > 0) {
-                reactToCorrectGuess(guessedLettersAmount);
-            } else if (guessedLettersAmount == -1) {
-                reactToIncorrectGuess();
-            } else {
-                LOGGER.info(ALREADY_GUESSED_RESPONSE);
-            }
+            makeReactionToGuessedLettersAmount(guessedLettersAmount);
         }
 
+    }
+
+    public void makeReactionToGuessedLettersAmount(int guessedLettersAmount) {
+        if (guessedLettersAmount > 0) {
+            reactToCorrectGuess(guessedLettersAmount);
+        } else if (guessedLettersAmount == -1) {
+            reactToIncorrectGuess();
+        } else {
+            LOGGER.info(ALREADY_TRIED_RESPONSE);
+        }
     }
 
     public void reactToPlayerSurrendered() {
@@ -128,14 +138,20 @@ public class GameHandler {
 
     private void printCurrentGameState() {
         LOGGER.info(hangmanPictureGenerator.getHangmanPicture(player.getMistakesMade()));
+        printGuessesMade();
         LOGGER.info(wordHandler.getGuessedLettersString());
         LOGGER.info("AVAILABLE LETTERS: " + wordHandler.getNotUsedLetters());
     }
 
-    private void playerGuessesLetter() {
+    private void printGuessesMade() {
+        LOGGER.info("TRIES: " + player.getMistakesMade() + " out of " + MAX_MISTAKES);
+    }
+
+    public char playerInputsLetter() {
         LOGGER.info("GUESS A LETTER (OR WRITE 'I SURRENDER'): ");
 
         String string = null;
+        char letter = ' ';
 
         do {
             if (string != null) {
@@ -147,19 +163,19 @@ public class GameHandler {
 
                 if (string.equals("I SURRENDER")) {
                     player.setPlaying(false);
-                    return;
+                    return '/';
                 }
+
+                letter = string.charAt(0);
 
             } catch (IOException exception) {
                 LOGGER.info(exception);
                 System.exit(2);
             }
 
-        } while (string.length() != 1);
+        } while (string.length() != 1 || !((letter >= 'a' && letter <= 'z') || (letter >= 'A' && letter <= 'Z')));
 
-        char letter = string.charAt(0);
-
-        player.setPlayerLetter(letter);
+        return letter;
     }
 
     private static final String CORRECT_RESPONSE = "CORRECT 😎";
@@ -178,7 +194,7 @@ public class GameHandler {
 
     private void outputPlayerWon() {
         LOGGER.info(hangmanPictureGenerator.getHangmanPicture(HangmanPictureHandler.WIN_INDEX));
-        LOGGER.info("THE GUESSED WORD: " + wordHandler.getGuessedLettersString());
+        LOGGER.info("THE GUESSED WORD: " + wordHandler.getWord());
         LOGGER.info(WON_MESSAGE);
     }
 
@@ -198,6 +214,7 @@ public class GameHandler {
 
     private void outputPlayerLost() {
         LOGGER.info(hangmanPictureGenerator.getHangmanPicture(player.getMistakesMade()));
+        printGuessesMade();
         LOGGER.info(LOST_MESSAGE);
         LOGGER.info("THE SECRET WORD: " + wordHandler.getWord());
     }
