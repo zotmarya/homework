@@ -1,5 +1,7 @@
 package edu.project1;
 
+import java.util.Arrays;
+
 public class WordHandler {
 
     private static WordHandler wordHandler;
@@ -28,9 +30,7 @@ public class WordHandler {
     }
 
     private void fillArrayWithAsterisks() {
-        for (int i = 0; i < guessedLetters.length; i++) {
-            guessedLetters[i] = '*';
-        }
+        Arrays.fill(guessedLetters, '*');
     }
 
     public int checkIfPlayerGuessedLetter(char letter) {
@@ -50,7 +50,7 @@ public class WordHandler {
             }
         }
 
-        return hasGuessed == true ? guessedAmount : -1;
+        return hasGuessed ? guessedAmount : -1;
     }
 
     public int getWordLength() {

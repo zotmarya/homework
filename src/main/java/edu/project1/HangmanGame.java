@@ -107,7 +107,7 @@ public class HangmanGame {
         playerLetter = SCANNER.nextLine().toUpperCase().charAt(0);
     }
 
-    private static String WON_MESSAGE = "YOU WON!🥳";
+    private static final String WON_MESSAGE = "YOU WON!🥳";
 
     private static void reactToCorrectGuess(int guessedLettersAmount) {
         gameSettings.increaseGuessedLettersAmount(guessedLettersAmount);
@@ -124,7 +124,7 @@ public class HangmanGame {
         LOGGER.info(WON_MESSAGE);
     }
 
-    private static String LOST_MESSAGE = "YOU LOST!😦";
+    private static final String LOST_MESSAGE = "YOU LOST!😦";
 
     private static void reactToIncorrectGuess() {
         gameSettings.increaseMistakesMadeByOne();

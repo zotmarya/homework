@@ -2,6 +2,7 @@ package edu.project1;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class HangmanPictureHandler {
 
@@ -33,6 +34,7 @@ public class HangmanPictureHandler {
             }
 
         } catch (IOException exception) {
+            Arrays.fill(hangmanPictures, "");
         }
     }
 
