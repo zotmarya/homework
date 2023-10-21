@@ -7,13 +7,19 @@ public class Rectangle {
     public Rectangle(int width, int height) {
         if (width > 0) {
             this.width = width;
+        } else {
+            this.width = 1;
         }
         if (height > 0) {
             this.height = height;
+        } else {
+            this.height = 1;
         }
     }
 
     public Rectangle() {
+        width = 1;
+        height = 1;
     }
 
     public Rectangle setWidth(int width) {
@@ -21,7 +27,7 @@ public class Rectangle {
             this.width = width;
         }
 
-        return this;
+        return new Rectangle(width, this.height);
     }
 
     public Rectangle setHeight(int height) {
@@ -29,7 +35,7 @@ public class Rectangle {
             this.height = height;
         }
 
-        return this;
+        return new Rectangle(this.width, height);
     }
 
     double calculateArea() {
