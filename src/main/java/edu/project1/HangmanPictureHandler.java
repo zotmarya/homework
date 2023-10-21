@@ -7,11 +7,12 @@ import java.util.Arrays;
 public class HangmanPictureHandler {
 
     private static HangmanPictureHandler hangmanPictureHandler;
-    private static final int hangmanPicsAmount = 6;
-    private static final String[] hangmanPictures;
+    public static final int WIN_INDEX = 6;
+    private static final int HANGMAN_PICS_AMOUNT = 7;
+    private static final String[] HANGMAN_PICTURES;
 
     static {
-        hangmanPictures = new String[hangmanPicsAmount];
+        HANGMAN_PICTURES = new String[HANGMAN_PICS_AMOUNT];
         readTxtFileWithHangmanPictures();
     }
 
@@ -23,10 +24,10 @@ public class HangmanPictureHandler {
             int symbolCode;
             int index = 0;
 
-            while (index < hangmanPicsAmount && (symbolCode = fileReader.read()) != -1) {
+            while (index < HANGMAN_PICS_AMOUNT && (symbolCode = fileReader.read()) != -1) {
                 symbol = (char) symbolCode;
                 if (symbol == '$') {
-                    hangmanPictures[index++] = picture.toString();
+                    HANGMAN_PICTURES[index++] = picture.toString();
                     picture.setLength(0);
                 } else {
                     picture.append(symbol);
@@ -34,24 +35,30 @@ public class HangmanPictureHandler {
             }
 
         } catch (IOException exception) {
-            Arrays.fill(hangmanPictures, "");
+            Arrays.fill(HANGMAN_PICTURES, "");
         }
     }
 
+    private static final int THREE = 3;
+    private static final int FOUR = 4;
+    private static final int FIVE = 5;
+    private static final int SIX = 6;
+
     public String getHangmanPicture(int amountOfMadeMistakes) {
         return switch (amountOfMadeMistakes) {
-            case 0 -> hangmanPictures[0];
-            case 1 -> hangmanPictures[1];
-            case 2 -> hangmanPictures[2];
-            case 3 -> hangmanPictures[3];
-            case 4 -> hangmanPictures[4];
-            case 5 -> hangmanPictures[5];
+            case 0 -> HANGMAN_PICTURES[0];
+            case 1 -> HANGMAN_PICTURES[1];
+            case 2 -> HANGMAN_PICTURES[2];
+            case THREE -> HANGMAN_PICTURES[THREE];
+            case FOUR -> HANGMAN_PICTURES[FOUR];
+            case FIVE -> HANGMAN_PICTURES[FIVE];
+            case SIX -> HANGMAN_PICTURES[SIX];
 
             default -> "Undefined argument.";
         };
     }
 
-    public static HangmanPictureHandler getInstance () {
+    public static HangmanPictureHandler getInstance() {
         if (hangmanPictureHandler == null) {
             hangmanPictureHandler = new HangmanPictureHandler();
         }
