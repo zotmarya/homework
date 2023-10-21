@@ -10,6 +10,7 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         player = Player.getInstance();
+        player.newGame();
     }
 
     @Test
