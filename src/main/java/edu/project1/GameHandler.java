@@ -79,7 +79,7 @@ public class GameHandler {
                     LOGGER.info("Enter option 1 or 2.");
                 }
 
-                choice = Integer.valueOf(line);
+                choice = Integer.parseInt(line);
             } catch (NumberFormatException exception) {
                 LOGGER.info("Incorrect input. Enter option 1 or 2.");
             } catch (IOException exception) {

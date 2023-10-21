@@ -18,7 +18,7 @@ public class WordHandler {
     private char[] guessedLetters;
     private int wordLength;
 
-    private HashMap<Character, Boolean> lettersUsedMap = new HashMap<>();
+    private final static HashMap<Character, Boolean> LETTERS_USED_MAP = new HashMap<>();
     private static final char[] LETTERS_ENG = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
@@ -29,16 +29,17 @@ public class WordHandler {
 
     public void fillHashMap() {
         for (char letter : LETTERS_ENG) {
-            lettersUsedMap.put(letter, false);
+            LETTERS_USED_MAP.put(letter, false);
         }
     }
 
     public String getNotUsedLetters() {
         StringBuilder letters = new StringBuilder();
 
-        for (Map.Entry<Character, Boolean> entry : lettersUsedMap.entrySet()) {
+        for (Map.Entry<Character, Boolean> entry : LETTERS_USED_MAP.entrySet()) {
             if (!entry.getValue()) {
-                letters.append(entry.getKey() + " ");
+                letters.append(entry.getKey());
+                letters.append(" ");
             }
         }
 
@@ -62,7 +63,7 @@ public class WordHandler {
 
         } catch (IOException exception) {
         } finally {
-            if (words.size() == 0) {
+            if (words.isEmpty()) {
                 words.addAll(Arrays.asList("WORLD", "COFFEE", "MAGIC"));
             }
         }
@@ -107,14 +108,14 @@ public class WordHandler {
     }
 
     public int checkIfPlayerGuessedLetter(char letter) {
-        if (lettersUsedMap.get(letter)) {
+        if (LETTERS_USED_MAP.get(letter)) {
             return 0;
         }
 
         int guessedAmount = 0;
         boolean hasGuessed = false;
 
-        lettersUsedMap.put(letter, true);
+        LETTERS_USED_MAP.put(letter, true);
 
         for (int i = 0; i < wordSymbols.length; i++) {
             if (letter == wordSymbols[i]) {
