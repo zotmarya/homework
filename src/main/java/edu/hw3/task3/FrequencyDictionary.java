@@ -8,10 +8,8 @@ public class FrequencyDictionary {
     public HashMap<String, Integer> makeFrequencyDictionary(ArrayList<String> strings) {
         HashMap<String, Integer> hashMap = new HashMap<>();
 
-        for (int i = 0, size = strings.size(); i < size; i++) {
-            String element = strings.get(i);
-
-            if(hashMap.containsKey(element)){
+        for (String element : strings) {
+            if (hashMap.containsKey(element)) {
                 int value = hashMap.get(element);
 
                 hashMap.put(element, ++value);

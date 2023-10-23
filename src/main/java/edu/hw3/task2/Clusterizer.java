@@ -7,7 +7,7 @@ public class Clusterizer {
 
         char[] symbols = string.toCharArray();
 
-        ArrayList arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList();
 
         for (int i = 0, firstBrackets = 0, secondBrackets = 0, beginning = 0; i < symbols.length; i++) {
             if (symbols[i] == '(') {
