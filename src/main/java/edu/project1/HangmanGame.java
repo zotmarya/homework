@@ -5,11 +5,9 @@ public class HangmanGame {
 
     @SuppressWarnings("UncommentedMain")
     public static void main(String[] args) {
-        GAME_HANDLER.initialize();
 
         while (true) {
-            GAME_HANDLER.printMenu();
-            GAME_HANDLER.playerMakesChoice();
+            GAME_HANDLER.startGame();
         }
 
     }
