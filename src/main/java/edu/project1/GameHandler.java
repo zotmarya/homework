@@ -14,8 +14,13 @@ public class GameHandler {
     private WordHandler wordHandler;
     private static final Logger LOGGER = LogManager.getLogger();
     private static final BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
-
     public static final int MAX_MISTAKES = 5;
+    private static final String CORRECT_RESPONSE = "CORRECT 😎";
+    private static final String BYE_MESSAGE = "GOOD BYE!😁";
+    private static final String ALREADY_TRIED_RESPONSE = "YOU'VE ALREADY TRIED THIS LETTER 🤔";
+    private static final String WON_MESSAGE = "YOU WON!🥳";
+    private static final String NOT_CORRECT_RESPONSE = "NO LUCK 😔";
+    private static final String LOST_MESSAGE = "YOU LOST!😦";
 
     private GameHandler() {
     }
@@ -56,7 +61,7 @@ public class GameHandler {
     }
 
     public void playerMakesChoice() {
-        int playerChoice = readChoice();
+        int playerChoice = readMenuChoice();
 
         switch (playerChoice) {
             case 1 -> {
@@ -68,7 +73,7 @@ public class GameHandler {
         }
     }
 
-    private int readChoice() {
+    private int readMenuChoice() {
         int choice = 0;
 
         while (choice != 1 && choice != 2) {
@@ -91,14 +96,10 @@ public class GameHandler {
         return choice;
     }
 
-    private static final String BYE_MESSAGE = "GOOD BYE!😁";
-
     private void exitGame() {
         LOGGER.info(BYE_MESSAGE);
         System.exit(0);
     }
-
-    private static final String ALREADY_TRIED_RESPONSE = "YOU'VE ALREADY TRIED THIS LETTER 🤔";
 
     private void playRound() {
         while (player.isPlaying()) {
@@ -112,12 +113,11 @@ public class GameHandler {
 
             int guessedLettersAmount = wordHandler.checkIfPlayerGuessedLetter(playerLetter);
 
-            makeReactionToGuessedLettersAmount(guessedLettersAmount);
+            reactToGuessedLettersAmount(guessedLettersAmount);
         }
-
     }
 
-    public void makeReactionToGuessedLettersAmount(int guessedLettersAmount) {
+    public void reactToGuessedLettersAmount(int guessedLettersAmount) {
         if (guessedLettersAmount > 0) {
             reactToCorrectGuess(guessedLettersAmount);
         } else if (guessedLettersAmount == -1) {
@@ -146,36 +146,42 @@ public class GameHandler {
     public char playerInputsLetter() {
         LOGGER.info("GUESS A LETTER (OR WRITE 'I SURRENDER'): ");
 
-        String string = null;
-        char letter = ' ';
+        String userInput = null;
 
         do {
-            if (string != null) {
+            if (userInput != null) {
                 LOGGER.info("WRITE ENGLISH LETTER.");
             }
 
             try {
-                string = BUFFERED_READER.readLine().trim().toUpperCase();
+                userInput = BUFFERED_READER.readLine().trim().toUpperCase();
 
-                if (string.equals("I SURRENDER")) {
+                if ("I SURRENDER".equals(userInput)) {
                     reactToPlayerSurrendered();
                     player.setPlaying(false);
                     return '/';
                 }
-
-                letter = string.charAt(0);
 
             } catch (IOException exception) {
                 LOGGER.info(exception);
                 System.exit(2);
             }
 
-        } while (string.length() != 1 || !((letter >= 'a' && letter <= 'z') || (letter >= 'A' && letter <= 'Z')));
+        } while (!checkIfStringIsOneSymbolLengthAndEngLetter(userInput));
 
-        return letter;
+        return userInput.charAt(0);
     }
 
-    private static final String CORRECT_RESPONSE = "CORRECT 😎";
+    private boolean checkIfStringIsOneSymbolLengthAndEngLetter(String userInput) {
+        char firstSymbol = userInput.charAt(0);
+
+        if (userInput.length() == 1
+            && (firstSymbol >= 'A' && firstSymbol <= 'Z')) {
+            return true;
+        }
+
+        return false;
+    }
 
     private void reactToCorrectGuess(int guessedLettersAmount) {
         player.increaseGuessedLettersAmount(guessedLettersAmount);
@@ -187,15 +193,11 @@ public class GameHandler {
         }
     }
 
-    private static final String WON_MESSAGE = "YOU WON!🥳";
-
     private void outputPlayerWon() {
         LOGGER.info(hangmanPictureGenerator.getHangmanPicture(HangmanPictureHandler.WIN_INDEX));
         LOGGER.info("THE GUESSED WORD: " + wordHandler.getWord());
         LOGGER.info(WON_MESSAGE);
     }
-
-    private static final String NOT_CORRECT_RESPONSE = "NO LUCK 😔";
 
     private void reactToIncorrectGuess() {
         player.increaseMistakesMadeByOne();
@@ -206,8 +208,6 @@ public class GameHandler {
             player.setPlaying(false);
         }
     }
-
-    private static final String LOST_MESSAGE = "YOU LOST!😦";
 
     private void outputPlayerLost() {
         LOGGER.info(hangmanPictureGenerator.getHangmanPicture(player.getMistakesMade()));
