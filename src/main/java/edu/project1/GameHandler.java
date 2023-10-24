@@ -175,12 +175,8 @@ public class GameHandler {
     private boolean checkIfStringIsOneSymbolLengthAndEngLetter(String userInput) {
         char firstSymbol = userInput.charAt(0);
 
-        if (userInput.length() == 1
-            && (firstSymbol >= 'A' && firstSymbol <= 'Z')) {
-            return true;
-        }
-
-        return false;
+        return userInput.length() == 1
+                && (firstSymbol >= 'A' && firstSymbol <= 'Z');
     }
 
     private void reactToCorrectGuess(int guessedLettersAmount) {
