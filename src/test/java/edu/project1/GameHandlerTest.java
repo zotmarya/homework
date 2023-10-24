@@ -18,27 +18,27 @@ public class GameHandlerTest {
 
     @Test
     void makeReactionToGuessedLettersAmount_WhenGuessedAllTheWords_StopGame() {
-        gameHandler.makeReactionToGuessedLettersAmount(4);
+        gameHandler.reactToGuessedLettersAmount(4);
 
         assertThat(gameHandler.getPlayer().isPlaying()).isFalse();
     }
 
     @Test
     void makeReactionToGuessedLettersAmount_WhenGuessedSomeLettersAndMadeNotMaxMistakes_ContinueGame() {
-        gameHandler.makeReactionToGuessedLettersAmount(-1);
-        gameHandler.makeReactionToGuessedLettersAmount(-1);
-        gameHandler.makeReactionToGuessedLettersAmount(2);
+        gameHandler.reactToGuessedLettersAmount(-1);
+        gameHandler.reactToGuessedLettersAmount(-1);
+        gameHandler.reactToGuessedLettersAmount(2);
 
         assertThat(gameHandler.getPlayer().isPlaying()).isTrue();
     }
 
     @Test
     void makeReactionToGuessedLettersAmount_WhenMadeMaxMistakes_StopGame() {
-        gameHandler.makeReactionToGuessedLettersAmount(-1);
-        gameHandler.makeReactionToGuessedLettersAmount(-1);
-        gameHandler.makeReactionToGuessedLettersAmount(-1);
-        gameHandler.makeReactionToGuessedLettersAmount(-1);
-        gameHandler.makeReactionToGuessedLettersAmount(-1);
+        gameHandler.reactToGuessedLettersAmount(-1);
+        gameHandler.reactToGuessedLettersAmount(-1);
+        gameHandler.reactToGuessedLettersAmount(-1);
+        gameHandler.reactToGuessedLettersAmount(-1);
+        gameHandler.reactToGuessedLettersAmount(-1);
 
         assertThat(gameHandler.getPlayer().isPlaying()).isFalse();
     }
