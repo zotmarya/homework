@@ -10,6 +10,10 @@ public class HangmanPictureHandler {
     public static final int WIN_INDEX = 6;
     private static final int HANGMAN_PICS_AMOUNT = 7;
     private static final String[] HANGMAN_PICTURES;
+    private static final int THREE = 3;
+    private static final int FOUR = 4;
+    private static final int FIVE = 5;
+    private static final int SIX = 6;
 
     static {
         HANGMAN_PICTURES = new String[HANGMAN_PICS_AMOUNT];
@@ -38,11 +42,6 @@ public class HangmanPictureHandler {
             Arrays.fill(HANGMAN_PICTURES, "");
         }
     }
-
-    private static final int THREE = 3;
-    private static final int FOUR = 4;
-    private static final int FIVE = 5;
-    private static final int SIX = 6;
 
     public String getHangmanPicture(int amountOfMadeMistakes) {
         return switch (amountOfMadeMistakes) {
