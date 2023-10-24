@@ -1,5 +1,7 @@
 package edu.project1;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,6 +19,9 @@ public class WordHandler {
     private char[] wordSymbols;
     private char[] guessedLetters;
     private int wordLength;
+    private static final int MAX_WORD_LENGTH = 20;
+    private static final int MIN_WORD_LENGTH = 3;
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private final static HashMap<Character, Boolean> LETTERS_USED_MAP = new HashMap<>();
     private static final char[] LETTERS_ENG = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
@@ -46,9 +51,6 @@ public class WordHandler {
         return letters.toString();
     }
 
-    private static final int MAX_WORD_LENGTH = 20;
-    private static final int MIN_WORD_LENGTH = 3;
-
     private void readTxtFileWithWordsToGuess() {
         try (
             BufferedReader bufferedReader =
@@ -62,6 +64,7 @@ public class WordHandler {
             }
 
         } catch (IOException exception) {
+            LOGGER.info(exception);
         } finally {
             if (words.isEmpty()) {
                 words.addAll(Arrays.asList("WORLD", "COFFEE", "MAGIC"));
