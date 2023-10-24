@@ -21,6 +21,10 @@ public class GameHandler {
         wordHandler = WordHandler.getInstance();
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public static GameHandler getInstance() {
         if (gameHandler == null) {
             gameHandler = new GameHandler();

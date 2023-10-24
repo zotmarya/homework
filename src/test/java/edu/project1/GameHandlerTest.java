@@ -12,7 +12,6 @@ public class GameHandlerTest {
     @BeforeEach
     void setUp() {
         gameHandler = GameHandler.getInstance();
-        gameHandler.initialize();
         gameHandler.prepareForNewGame("WORD");
     }
 
