@@ -141,12 +141,12 @@ public class GameHandler {
                 System.exit(2);
             }
 
-        } while (!checkIfStringIsOneSymbolLengthAndEngLetter(userInput));
+        } while (!isOneSymbolStringAndEngLetter(userInput));
 
         return userInput.charAt(0);
     }
 
-    private boolean checkIfStringIsOneSymbolLengthAndEngLetter(String userInput) {
+    private boolean isOneSymbolStringAndEngLetter(String userInput) {
         char firstSymbol = userInput.charAt(0);
 
         return userInput.length() == 1
