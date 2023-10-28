@@ -5,10 +5,14 @@ import java.util.HashMap;
 
 public class FrequencyDictionary {
 
-    public HashMap<String, Integer> makeFrequencyDictionary(ArrayList<String> strings) {
-        HashMap<String, Integer> hashMap = new HashMap<>();
+    public HashMap<Object, Integer> makeFrequencyDictionary(ArrayList<Object> strings) {
+        if (strings == null) {
+            return null;
+        }
 
-        for (String element : strings) {
+        HashMap<Object, Integer> hashMap = new HashMap<>();
+
+        for (Object element : strings) {
             if (hashMap.containsKey(element)) {
                 int value = hashMap.get(element);
 

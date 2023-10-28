@@ -3,32 +3,26 @@ package edu.hw3.task1;
 public class AtbashEncryptor {
 
     public String useAtbashEncryption(String wordToEncrypt) {
+        if (wordToEncrypt == null) {
+            return null;
+        }
+
         char[] letters = wordToEncrypt.toCharArray();
 
         for (int i = 0; i < letters.length; i++) {
             char letter = letters[i];
-            int difference;
 
             if (letter <= 'Z' && letter >= 'A') {
-                if (letter < 'N') {
-                    difference = letter - 'A';
-                    letters[i] = (char) ('Z' - difference);
-                } else {
-                    difference = 'Z' - letter;
-                    letters[i] = (char) ('A' + difference);
-                }
-
+                letters[i] = cypher(letter, 'A', 'Z');
             } else if (letter <= 'z' && letter >= 'a') {
-                if (letter < 'n') {
-                    difference = letter - 'a';
-                    letters[i] = (char) ('z' - difference);
-                } else {
-                    difference = 'z' - letter;
-                    letters[i] = (char) ('a' + difference);
-                }
+                letters[i] = cypher(letter, 'a', 'z');
             }
         }
 
         return new String(letters);
+    }
+
+    private char cypher(char letter, char left, char right) {
+        return (char) (left + right - letter);
     }
 }

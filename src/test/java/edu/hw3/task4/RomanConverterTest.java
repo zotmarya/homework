@@ -1,8 +1,15 @@
 package edu.hw3.task4;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RomanConverterTest {
@@ -15,13 +22,21 @@ public class RomanConverterTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"2,II", "12, XII", "10,X"})
-    void convertNumberFromArabToRoman_WhenCorrectNumberFormat_ReturnsCorrectRomanNumber(
+    @CsvSource({"2,II", "12, XII", "10,X", "3999,MMMCMXCIX", "375,CCCLXXV"})
+    void convertNumberFromArabToRoman_WhenGivenArabNumber_ReturnsCorrectRomanNumber(
         int arabNumber,
         String romanNumber
     ) {
         String convertedNumber = romanConverter.convertNumberFromArabToRoman(arabNumber);
 
         assertThat(convertedNumber).isEqualTo(romanNumber);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {4002, 0, -3})
+    void convertNumberFromArabToRoman_WhenGivenOutOfRangeArabNumber_ReturnsNull(int arabNumber) {
+        String convertedNumber = romanConverter.convertNumberFromArabToRoman(arabNumber);
+
+        assertThat(convertedNumber).isNull();
     }
 }

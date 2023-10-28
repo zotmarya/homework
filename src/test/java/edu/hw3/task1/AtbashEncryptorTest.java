@@ -1,6 +1,7 @@
 package edu.hw3.task1;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,5 +25,23 @@ public class AtbashEncryptorTest {
         String encryptedWord = atbashEncryptor.useAtbashEncryption(word);
 
         assertThat(encryptedWord).isEqualTo(expectedWord);
+    }
+
+    @Test
+    void useAtbashEncryption_WhenGivenNull_ReturnNull() {
+        String word = null;
+
+        String encryptedWord = atbashEncryptor.useAtbashEncryption(word);
+
+        assertThat(encryptedWord).isNull();
+    }
+
+    @Test
+    void useAtbashEncryption_WhenGivenEmptyString_ReturnEmptyString() {
+        String word = "";
+
+        String encryptedWord = atbashEncryptor.useAtbashEncryption(word);
+
+        assertThat(encryptedWord).isBlank();
     }
 }
