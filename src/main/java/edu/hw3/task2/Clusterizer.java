@@ -11,7 +11,7 @@ public class Clusterizer {
 
         char[] symbols = cluster.toCharArray();
 
-        ArrayList<String> arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList<>();
 
         for (int i = 0, firstBrackets = 0, beginning = 0; i < symbols.length; i++) {
             if (symbols[i] == '(') {

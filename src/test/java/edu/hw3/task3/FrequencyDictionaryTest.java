@@ -34,7 +34,7 @@ public class FrequencyDictionaryTest {
 
     @ParameterizedTest
     @MethodSource("keysAndValues")
-    void makeFrequencyDictionary_WhenGivenStrings_ReturnsFrequencyHashMap(ArrayList<Object> givenList, Map expectedDictionary) {
+    void makeFrequencyDictionary_WhenGivenStrings_ReturnsFrequencyHashMap(ArrayList<Object> givenList, Map<Object, Integer> expectedDictionary) {
         HashMap<Object, Integer> resultHashMap = frequencyDictionary.makeFrequencyDictionary(givenList);
 
         assertThat(resultHashMap).containsAllEntriesOf(expectedDictionary);
