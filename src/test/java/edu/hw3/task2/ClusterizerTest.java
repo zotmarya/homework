@@ -1,12 +1,12 @@
 package edu.hw3.task2;
 
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import java.util.ArrayList;
-import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClusterizerTest {
@@ -20,19 +20,19 @@ public class ClusterizerTest {
 
     static Stream<Arguments> clusters() {
         return Stream.of(
-            Arguments.arguments("()()()", new String[]{"()", "()", "()"}),
-            Arguments.arguments("((()))", new String[]{"((()))"}),
-            Arguments.arguments( "((()))(())()()(()())", new String[]{"((()))", "(())", "()", "()", "(()())"}),
-            Arguments.arguments("((())())(()(()()))", new String[]{"((())())", "(()(()()))"}),
-            Arguments.arguments("(abc)()()", new String[]{"(abc)", "()", "()"}),
-            Arguments.arguments("(abc)abc()()", new String[]{"(abc)", "()", "()"})
+            Arguments.arguments("()()()", new String[] {"()", "()", "()"}),
+            Arguments.arguments("((()))", new String[] {"((()))"}),
+            Arguments.arguments("((()))(())()()(()())", new String[] {"((()))", "(())", "()", "()", "(()())"}),
+            Arguments.arguments("((())())(()(()()))", new String[] {"((())())", "(()(()()))"}),
+            Arguments.arguments("(abc)()()", new String[] {"(abc)", "()", "()"}),
+            Arguments.arguments("(abc)abc()()", new String[] {"(abc)", "()", "()"})
         );
     }
 
     @ParameterizedTest
     @MethodSource("clusters")
     void clusterize_WhenGivenString_ReturnsArrayOfClusterizedElements(String cluster, String[] expectedClusters) {
-        ArrayList<String> result = clusterizer.clusterize(cluster);
+        List<String> result = clusterizer.clusterize(cluster);
 
         assertThat(result).containsExactly(expectedClusters);
     }
@@ -41,7 +41,7 @@ public class ClusterizerTest {
     void clusterize_WhenGivenNull_ReturnsNull() {
         String cluster = null;
 
-        ArrayList<String> result = clusterizer.clusterize(cluster);
+        List<String> result = clusterizer.clusterize(cluster);
 
         assertThat(result).isNull();
     }
@@ -50,7 +50,7 @@ public class ClusterizerTest {
     void clusterize_WhenGivenEmptyString_ReturnsEmptyArray() {
         String cluster = "";
 
-        ArrayList<String> result = clusterizer.clusterize(cluster);
+        List<String> result = clusterizer.clusterize(cluster);
 
         assertThat(result).isEmpty();
     }
