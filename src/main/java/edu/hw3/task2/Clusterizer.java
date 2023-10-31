@@ -1,9 +1,10 @@
 package edu.hw3.task2;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Clusterizer {
-    public ArrayList<String> clusterize(String cluster) {
+    public List<String> clusterize(String cluster) {
 
         if (cluster == null) {
             return null;
@@ -11,7 +12,7 @@ public class Clusterizer {
 
         char[] symbols = cluster.toCharArray();
 
-        ArrayList<String> arrayList = new ArrayList<>();
+        List<String> arrayList = new ArrayList<>();
 
         for (int i = 0, firstBrackets = 0, beginning = 0; i < symbols.length; i++) {
             if (symbols[i] == '(') {
