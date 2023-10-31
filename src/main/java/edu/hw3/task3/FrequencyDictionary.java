@@ -2,15 +2,16 @@ package edu.hw3.task3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class FrequencyDictionary {
 
-    public HashMap<Object, Integer> makeFrequencyDictionary(ArrayList<Object> strings) {
+    public Map<Object, Integer> makeFrequencyDictionary(ArrayList<Object> strings) {
         if (strings == null) {
             return null;
         }
 
-        HashMap<Object, Integer> hashMap = new HashMap<>();
+        Map<Object, Integer> hashMap = new HashMap<>();
 
         for (Object element : strings) {
             if (hashMap.containsKey(element)) {
