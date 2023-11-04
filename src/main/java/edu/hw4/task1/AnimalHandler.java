@@ -3,13 +3,13 @@ package edu.hw4.task1;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -140,7 +140,7 @@ public class AnimalHandler {
                 return new HashSet<>(Arrays.stream(error.getErrors()).toList());
             }
 
-            return null;
+            return Collections.emptySet();
         };
 
         return animals.stream().collect(Collectors.toMap(Animal::name, checkIfAnimalInfoIsValid));
@@ -201,7 +201,8 @@ public class AnimalHandler {
         }
 
         if (!errorList.isEmpty()) {
-            ValidationError[] errors = errorList.toArray(new ValidationError[errorList.size()]);
+            ValidationError[] errors;
+            errors = errorList.toArray(new ValidationError[errorList.size()]);
 
             throw new ValidationError("Animal information is not valid.", errors);
         }
