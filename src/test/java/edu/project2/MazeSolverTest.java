@@ -19,7 +19,7 @@ public class MazeSolverTest {
 
     @Test
     void findBreadthFirstWay_WhenGivenSolvableMaze_SolvesMaze() {
-        Maze maze = Maze.getInstanceFromFile(new File("src\\main\\resources\\project2\\maze-2.txt"));
+        Maze maze = Maze.getInstanceFromFile(new File(".\\src\\main\\resources\\project2\\maze-2.txt"));
 
         mazeSolver.findBFWay(maze, maze.getStartPoint(), maze.getEndPoint(), wayToExit);
 
