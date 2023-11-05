@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("MagicNumber")
 public class AnimalHandler {
     public static List<Animal> sortAnimalsByHeightAsc(List<Animal> animals) {
         List<Animal> animalList = animals.stream().toList();
@@ -60,7 +61,7 @@ public class AnimalHandler {
             return null;
         }
 
-        return animals.stream().sorted(Comparator.comparingInt(Animal::weight).reversed())
+        return animals.stream().sorted(Comparator.comparingInt(Animal::age).reversed())
             .skip(placement - 1)
             .findFirst().get();
     }
@@ -133,21 +134,23 @@ public class AnimalHandler {
     }
 
     public static Map<String, Set<ValidationError>> getAnimalsWhoseNameHasMistakes(List<Animal> animals) {
-        Function<Animal, Set<ValidationError>> checkIfAnimalInfoIsValid = animal -> {
+        Function<Animal, Set<ValidationError>> functionAnimalInfoIsValid = animal -> {
             try {
                 checkIfAnimalInfoIsValid(animal);
+                return Collections.emptySet();
             } catch (ValidationError error) {
                 return new HashSet<>(Arrays.stream(error.getErrors()).toList());
             }
-
-            return Collections.emptySet();
         };
 
-        return animals.stream().collect(Collectors.toMap(Animal::name, checkIfAnimalInfoIsValid));
+        return animals.stream()
+            .collect(Collectors.toMap(Animal::name, functionAnimalInfoIsValid))
+            .entrySet().stream().filter(entry -> !entry.getValue().isEmpty())
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public static Map<String, String> getAnimalsWhoseNameHasMistakesPrettyPrint(List<Animal> animals) {
-        Function<Animal, String> checkIfAnimalInfoIsValid = animal -> {
+        Function<Animal, String> functionAnimalInfoIsValid = animal -> {
             try {
                 checkIfAnimalInfoIsValid(animal);
             } catch (ValidationError error) {
@@ -171,10 +174,13 @@ public class AnimalHandler {
                 return errorsPrint.toString();
             }
 
-            return null;
+            return "";
         };
 
-        return animals.stream().collect(Collectors.toMap(Animal::name, checkIfAnimalInfoIsValid));
+        return animals.stream().collect(Collectors.toMap(Animal::name, functionAnimalInfoIsValid))
+            .entrySet().stream()
+            .filter(entry -> !entry.getValue().isEmpty())
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private static boolean checkIfAnimalInfoIsValid(Animal animal) throws ValidationError {
@@ -192,7 +198,7 @@ public class AnimalHandler {
             errorList.add(new ValidationError("Negative weight value.", null));
         }
 
-        String regexForEngLettersAndDash = "^[a-zA-Z]+(-[a-zA-Z]+)*$";
+        String regexForEngLettersAndDash = "^[a-zA-Z]+(-[a-zA-Z]+)*( [a-zA-Z]+(-[a-zA-Z]+)*)*$";
         Pattern pattern = Pattern.compile(regexForEngLettersAndDash);
         Matcher matcher = pattern.matcher(animal.name());
 

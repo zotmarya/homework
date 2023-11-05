@@ -1,5 +1,6 @@
 package edu.hw4.task1;
 
+@SuppressWarnings("MagicNumber")
 public record Animal(
     String name,
     Type type,
@@ -10,12 +11,12 @@ public record Animal(
     boolean bites
 ) {
 
-    enum Type {
-        CAT, DOG, BIRD, FISH, SPIDER
+    public enum Type {
+        BIRD, CAT, DOG, FISH, SPIDER
     }
 
-    enum Sex {
-        M, F
+    public enum Sex {
+        F, M
     }
 
     public int paws() {
