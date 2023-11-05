@@ -20,7 +20,7 @@ public class AnimalHandler {
     public static List<Animal> sortAnimalsByHeightAsc(List<Animal> animals) {
         List<Animal> animalList = animals.stream().toList();
 
-        Comparator<Animal> heightComparator = Comparator.comparingInt((Animal animal) -> animal.height());
+        Comparator<Animal> heightComparator = Comparator.comparingInt(Animal::height);
 
         animalList = animalList.stream().sorted(heightComparator).toList();
 
@@ -42,7 +42,7 @@ public class AnimalHandler {
     public static Animal getAnimalWithLongestName(List<Animal> animals) {
         Comparator<Animal> nameLengthComparator = Comparator.comparingInt((Animal animal) -> animal.name().length());
 
-        return animals.stream().max(nameLengthComparator).get();
+        return animals.stream().max(nameLengthComparator).orElse(null);
     }
 
     public static Animal.Sex getMostFrequentSex(List<Animal> animals) {
@@ -53,7 +53,7 @@ public class AnimalHandler {
     public static Map<Animal.Type, Integer> getAnimalTypeAndMaxWeight(List<Animal> animals) {
         return animals.stream().collect(
             Collectors.groupingBy(Animal::type, Collectors.collectingAndThen(
-                Collectors.maxBy(Comparator.comparingInt(Animal::weight)), animal -> animal.get().weight())));
+                Collectors.maxBy(Comparator.comparingInt(Animal::weight)), animal -> animal.orElse(null).weight())));
     }
 
     public static Animal getNOldestAnimal(List<Animal> animals, int placement) {
@@ -63,7 +63,7 @@ public class AnimalHandler {
 
         return animals.stream().sorted(Comparator.comparingInt(Animal::age).reversed())
             .skip(placement - 1)
-            .findFirst().get();
+            .findFirst().orElse(null);
     }
 
     public static Optional<Animal> getHeaviestAnimalWithHeightLessThan(List<Animal> animals, int heightBound) {
@@ -120,17 +120,13 @@ public class AnimalHandler {
         long bitingDogsAmount = animals.stream()
             .filter(animal -> animal.type().equals(Animal.Type.DOG) && animal.bites()).count();
 
-        if (bitingSpidersAmount > bitingDogsAmount) {
-            return true;
-        }
-
-        return false;
+        return bitingSpidersAmount > bitingDogsAmount;
     }
 
     public static Animal getHeaviestFish(List<Animal>... animals) {
         return Arrays.stream(animals).flatMap(Collection::stream)
             .filter(animal -> animal.type().equals(Animal.Type.FISH)).max(Comparator.comparingInt(Animal::weight))
-            .get();
+            .orElse(null);
     }
 
     public static Map<String, Set<ValidationError>> getAnimalsWhoseNameHasMistakes(List<Animal> animals) {
@@ -157,17 +153,17 @@ public class AnimalHandler {
                 ValidationError[] errors = error.getErrors();
                 StringBuilder errorsPrint = new StringBuilder();
 
-                for (int i = 0; i < errors.length; i++) {
-                    String errorMessage = errors[i].getMessage();
+                for (ValidationError validationError : errors) {
+                    String errorMessage = validationError.getMessage();
 
                     if (errorMessage.contains("age")) {
-                        errorsPrint.append("Age: " + errorMessage);
+                        errorsPrint.append("Age: ").append(errorMessage);
                     } else if (errorMessage.contains("height")) {
-                        errorsPrint.append("Height: " + errorMessage);
+                        errorsPrint.append("Height: ").append(errorMessage);
                     } else if (errorMessage.contains("weight")) {
-                        errorsPrint.append("Weight: " + errorMessage);
+                        errorsPrint.append("Weight: ").append(errorMessage);
                     } else if (errorMessage.contains("name")) {
-                        errorsPrint.append("Name: " + errorMessage);
+                        errorsPrint.append("Name: ").append(errorMessage);
                     }
                 }
 
@@ -208,7 +204,7 @@ public class AnimalHandler {
 
         if (!errorList.isEmpty()) {
             ValidationError[] errors;
-            errors = errorList.toArray(new ValidationError[errorList.size()]);
+            errors = errorList.toArray(new ValidationError[0]);
 
             throw new ValidationError("Animal information is not valid.", errors);
         }
