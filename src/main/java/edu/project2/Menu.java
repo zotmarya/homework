@@ -95,7 +95,7 @@ public class Menu {
         System.out.print("""
 
             (File should contain A (start point) and B (end point) letters)
-            Write name of file with the maze to read:  """);
+            Write name of file with the maze to read:""");
     }
 
     public void printIncorrectFileFormat() {

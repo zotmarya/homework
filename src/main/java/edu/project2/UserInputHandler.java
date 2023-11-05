@@ -18,8 +18,6 @@ public class UserInputHandler {
     public String inputFileName() {
         SCANNER.nextLine();
 
-        String fileName = SCANNER.nextLine().trim();
-
-        return fileName;
+        return SCANNER.nextLine().trim();
     }
 }

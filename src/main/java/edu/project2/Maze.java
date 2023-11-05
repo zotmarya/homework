@@ -139,11 +139,7 @@ public class Maze {
             System.exit(-1);
         }
 
-        if (lettersAmount != 2) {
-            return false;
-        }
-
-        return true;
+        return lettersAmount == 2;
     }
 
     private boolean isSymbolValid(char symbol) {
