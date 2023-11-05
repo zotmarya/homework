@@ -4,6 +4,7 @@ public class WayCharacterIdentifier {
     private int[][] characterTable;
     private Point centerPoint;
 
+    @SuppressWarnings("MagicNumber")
     public WayCharacterIdentifier(Point point) {
         this.characterTable = new int[3][3];
         centerPoint = point;
@@ -26,7 +27,7 @@ public class WayCharacterIdentifier {
             symbol = '┐';
         } else if (characterTable[0][1] == 1 && characterTable[1][0] == 1) {
             symbol = '┘';
-        }  else if (characterTable[1][2] == 1 && characterTable[2][1] == 1) {
+        } else if (characterTable[1][2] == 1 && characterTable[2][1] == 1) {
             symbol = '┌';
         }
 

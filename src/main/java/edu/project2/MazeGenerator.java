@@ -16,7 +16,9 @@ public class MazeGenerator {
         List.of(new Point(2, 0), new Point(-2, 0), new Point(0, 2), new Point(0, -2)));
 
     public Maze createMazeRB(int horizontalCellsAmount, int verticalCellsAmount, int seedRandom) {
-        RANDOM.setSeed(seedRandom);
+        if (seedRandom != -1) {
+            RANDOM.setSeed(seedRandom);
+        }
 
         Maze maze = createMaze(horizontalCellsAmount, verticalCellsAmount, Maze.WALL);
 
@@ -30,7 +32,7 @@ public class MazeGenerator {
     private void createMazeRecursiveBacktracking(Maze maze, Point point) {
         Point newPoint;
         Point move;
-        ArrayList<Point> points = (ArrayList<Point>) POINTS.clone();
+        ArrayList<Point> points = new ArrayList<>(POINTS);
 
         Collections.shuffle(points, RANDOM);
 
@@ -129,7 +131,9 @@ public class MazeGenerator {
     }
 
     public Maze createMazeEA(int horizontalCellsAmount, int verticalCellsAmount, int seedRandom) {
-        RANDOM.setSeed(seedRandom);
+        if (seedRandom != -1) {
+            RANDOM.setSeed(seedRandom);
+        }
 
         Maze maze = createMaze(horizontalCellsAmount, verticalCellsAmount, Maze.EMPTY_BLOCK);
 
@@ -140,91 +144,31 @@ public class MazeGenerator {
         return maze;
     }
 
-    public void createMazeEllerAlgorithm(Maze maze) {
+    private void createMazeEllerAlgorithm(Maze maze) {
 
         int[] mazeRow = new int[(maze.getWidth() - 1) / 2];
         int rowsAmount = (maze.getHeight() - 1) / 2;
         int setNumber = 1;
 
         for (int i = 0; i < rowsAmount; i++) {
-            // first step
-//            for (int j = 0; j < mazeRow.length; j++) {
-//                if (mazeRow[j] == 0) {
-//                    mazeRow[j] = setNumber++;
-//                }
-//            }
-
-            setNumber = step1(i, setNumber, mazeRow);
+            // step 1
+            setNumber = setNumbersInRow(setNumber, mazeRow);
 
             int y = i * 2 + 1;
 
-            // second step - right walls
-//            for (int j = 0; j < mazeRow.length - 1; j++) {
-//                if ((mazeRow[j + 1] == mazeRow[j]) || RANDOM.nextBoolean()) {
-//                    maze.setCellInMaze(j * 2 + 2, y, Maze.WALL);
-//                } else {
-//                    // combine sets
-//                    int changeSet = mazeRow[j + 1];
-//
-//                    for (int n = 0; n < mazeRow.length; n++) {
-//                        if (mazeRow[n] == changeSet) {
-//                            mazeRow[n] = mazeRow[j];
-//                        }
-//                    }
-//                }
-//            }
-            step2(y, mazeRow, maze);
+            // step 2 - right walls
+            addRightWalls(y, mazeRow, maze);
 
-            // step 3 bottom walls
-//            Map<Integer, Integer> map = new HashMap<>();
-//            for (int j = 0; j < mazeRow.length; j++) {
-//                if (map.containsKey(mazeRow[j])) {
-//                    map.put(mazeRow[j], map.get(mazeRow[j]) + 1);
-//                } else {
-//                    map.put(mazeRow[j], 1);
-//                }
-//            }
-//
-//            for (int j = 0; j < mazeRow.length - 1; j++) {
-//                if (map.get(mazeRow[j]) > 1) {
-//                    if (RANDOM.nextBoolean()) {
-//                        maze.setCellInMaze(j * 2 + 1, y + 1, Maze.WALL);
-//                        map.put(mazeRow[j], map.get(mazeRow[j]) - 1);
-//                    }
-//                }
-//            }
-
-            step3(y, mazeRow, maze);
+            // step 3 - bottom walls
+            addBottomWalls(y, mazeRow, maze);
 
             // step 4
-//            if (i == rowsAmount - 1) {
-//                for (int j = 0; j < mazeRow.length - 1; j++) {
-//                    if (mazeRow[j + 1] != mazeRow[j]) {
-//                        maze.setCellInMaze(j * 2 + 2, y, Maze.EMPTY_BLOCK);
-//
-//                        // full merging of two sets
-//                        int changeSet = mazeRow[j + 1];
-//                        for (int n = 0; n < mazeRow.length; n++) {
-//                            if (mazeRow[n] == changeSet) {
-//                                mazeRow[n] = mazeRow[j];
-//                            }
-//                        }
-//                    }
-//                }
-//            } else {
-//                for (int j = 0; j < mazeRow.length; j++) {
-//                    if (maze.getCellInMaze(j * 2 + 1, y + 1) == Maze.WALL) {
-//                        mazeRow[j] = 0;
-//                    }
-//                }
-//            }
-
-            step4(i, y, rowsAmount, mazeRow, maze);
+            finishOrPrepareForNextRow(i, y, rowsAmount, mazeRow, maze);
         }
         completeMaze(maze);
     }
 
-    private int step1(int i, int setNumber, int[] mazeRow) {
+    private int setNumbersInRow(int setNumber, int[] mazeRow) {
         int tmpSetNumber = setNumber;
 
         for (int j = 0; j < mazeRow.length; j++) {
@@ -233,11 +177,10 @@ public class MazeGenerator {
             }
         }
 
-
         return tmpSetNumber;
     }
 
-    private void step2(int y, int[] mazeRow, Maze maze) {
+    private void addRightWalls(int y, int[] mazeRow, Maze maze) {
         for (int j = 0; j < mazeRow.length - 1; j++) {
             if ((mazeRow[j + 1] == mazeRow[j]) || RANDOM.nextBoolean()) {
                 maze.setCellInMaze(j * 2 + 2, y, Maze.WALL);
@@ -254,7 +197,7 @@ public class MazeGenerator {
         }
     }
 
-    private void step3(int y, int[] mazeRow, Maze maze) {
+    private void addBottomWalls(int y, int[] mazeRow, Maze maze) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int j = 0; j < mazeRow.length; j++) {
             if (map.containsKey(mazeRow[j])) {
@@ -274,7 +217,7 @@ public class MazeGenerator {
         }
     }
 
-    private void step4(int i, int y, int rowsAmount, int[] mazeRow, Maze maze) {
+    private void finishOrPrepareForNextRow(int i, int y, int rowsAmount, int[] mazeRow, Maze maze) {
         if (i == rowsAmount - 1) {
             for (int j = 0; j < mazeRow.length - 1; j++) {
                 if (mazeRow[j + 1] != mazeRow[j]) {
@@ -297,7 +240,6 @@ public class MazeGenerator {
             }
         }
     }
-
 
     private void completeMaze(Maze maze) {
         int height = maze.getHeight();

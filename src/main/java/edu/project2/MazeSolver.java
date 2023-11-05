@@ -11,12 +11,6 @@ public class MazeSolver {
 
     private int[][] systemMaze;
 
-    public void findDFWay(Maze maze, Point currentPoint, Point targetPoint, LinkedList<Point> way) {
-        prepareMaze(maze);
-        findDepthFirstWay(maze, currentPoint, targetPoint, way);
-
-    }
-
     public void prepareMaze(Maze maze) {
         systemMaze = new int[maze.getHeight()][maze.getWidth()];
     }
@@ -29,8 +23,13 @@ public class MazeSolver {
         return systemMaze[point.getY()][point.getX()];
     }
 
+    public void findDFWay(Maze maze, Point currentPoint, Point targetPoint, LinkedList<Point> way) {
+        prepareMaze(maze);
+        findDepthFirstWay(maze, currentPoint, targetPoint, way);
+
+    }
+
     private boolean findDepthFirstWay(Maze maze, Point currentPoint, Point targetPoint, LinkedList<Point> way) {
-        // Ставим след, чтобы не зациклится
         setSystemMazeValue(currentPoint, 1);
 
         if (currentPoint.equals(targetPoint)) {
@@ -74,7 +73,7 @@ public class MazeSolver {
         while (!points.isEmpty()) {
             Point point = points.pollFirst();
 
-            if(point.equals(targetPoint)) {
+            if (point.equals(targetPoint)) {
                 hasFoundWay = true;
                 break;
             }
@@ -94,18 +93,21 @@ public class MazeSolver {
             }
         }
 
-        if(hasFoundWay) {
+        if (hasFoundWay) {
             extractWay(maze, targetPoint, way);
         }
 
         return hasFoundWay;
     }
 
+    @SuppressWarnings("ReturnCount")
     private void extractWay(Maze maze, Point point, List<Point> way) {
 
         way.addFirst(point);
         int pointMazeValue = getSystemMazeValue(point);
-        if (pointMazeValue == 1) return;
+        if (pointMazeValue == 1) {
+            return;
+        }
 
         for (int i = 0, size = POINTS_FOR_SEARCH.size(); i < size; i++) {
             Point nextPoint = point.getCopy();
@@ -116,5 +118,4 @@ public class MazeSolver {
             }
         }
     }
-
 }
