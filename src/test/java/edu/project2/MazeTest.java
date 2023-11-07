@@ -11,7 +11,7 @@ public class MazeTest {
     @ParameterizedTest
     @ValueSource(strings = {"maze-invalid-size.txt", "maze-invalid-format.txt"})
     void getInstanceFromFile_WhenPassingFileWithInvalidMaze_ReturnsNull(String fileName) {
-        File fileMaze = new File("src\\main\\resources\\project2\\" + fileName);
+        File fileMaze = new File("src/main/resources/project2/" + fileName);
 
         Maze maze = Maze.getInstanceFromFile(fileMaze);
 
@@ -21,7 +21,7 @@ public class MazeTest {
 
     @Test
     void getInstanceFromFile_WhenPassingFileWithValidMaze_ReturnsMazeObject() {
-        File fileMaze = new File("src\\main\\resources\\project2\\maze-1.txt");
+        File fileMaze = new File("src/main/resources/project2/maze-1.txt");
 
         Maze maze = Maze.getInstanceFromFile(fileMaze);
 
@@ -30,7 +30,7 @@ public class MazeTest {
 
     @Test
     void getInstanceFromFile_WhenPassingNonExistentFile_ReturnsNull() {
-        File fileMaze = new File("src\\main\\resources\\project2\\maz.txt");
+        File fileMaze = new File("src/main/resources/project2/maz.txt");
 
         Maze maze = Maze.getInstanceFromFile(fileMaze);
 
