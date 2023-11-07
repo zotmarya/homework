@@ -18,20 +18,12 @@ import java.util.stream.Collectors;
 @SuppressWarnings("MagicNumber")
 public class AnimalHandler {
     public static List<Animal> sortAnimalsByHeightAsc(List<Animal> animals) {
-        List<Animal> animalList = animals.stream().toList();
-
-        Comparator<Animal> heightComparator = Comparator.comparingInt(Animal::height);
-
-        animalList = animalList.stream().sorted(heightComparator).toList();
-
-        return animalList;
+        return animals.stream().sorted(Comparator.comparingInt(Animal::height)).toList();
     }
 
     public static List<Animal> sortFirstNAnimalsByWeightDesc(List<Animal> animals, int amountOfFirstAnimals) {
-        Comparator<Animal> weightComparator =
-            (Animal animal1, Animal animal2) -> -(animal1.weight() - animal2.weight());
-
-        return animals.stream().sorted(weightComparator).limit(amountOfFirstAnimals).toList();
+        return animals.stream().sorted((Animal animal1, Animal animal2) -> -(animal1.weight() - animal2.weight()))
+            .limit(amountOfFirstAnimals).toList();
     }
 
     public static Map<Animal.Type, Integer> getAnimalsAmount(List<Animal> animals) {
@@ -40,9 +32,7 @@ public class AnimalHandler {
     }
 
     public static Animal getAnimalWithLongestName(List<Animal> animals) {
-        Comparator<Animal> nameLengthComparator = Comparator.comparingInt((Animal animal) -> animal.name().length());
-
-        return animals.stream().max(nameLengthComparator).orElse(null);
+        return animals.stream().max(Comparator.comparingInt((Animal animal) -> animal.name().length())).orElse(null);
     }
 
     public static Animal.Sex getMostFrequentSex(List<Animal> animals) {
