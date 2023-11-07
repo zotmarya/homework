@@ -43,7 +43,9 @@ public class AnimalHandler {
     public static Map<Animal.Type, Integer> getAnimalTypeAndMaxWeight(List<Animal> animals) {
         return animals.stream().collect(
             Collectors.groupingBy(Animal::type, Collectors.collectingAndThen(
-                Collectors.maxBy(Comparator.comparingInt(Animal::weight)), animal -> animal.orElse(null).weight())));
+                Collectors.maxBy(Comparator.comparingInt(Animal::weight)),
+                animal -> animal.map(Animal::weight).orElse(null)
+            )));
     }
 
     public static Animal getNOldestAnimal(List<Animal> animals, int placement) {
@@ -113,8 +115,8 @@ public class AnimalHandler {
         return bitingSpidersAmount > bitingDogsAmount;
     }
 
-    public static Animal getHeaviestFish(List<Animal>... animals) {
-        return Arrays.stream(animals).flatMap(Collection::stream)
+    public static Animal getHeaviestFish(List<List<Animal>> animals) {
+        return animals.stream().flatMap(Collection::stream)
             .filter(animal -> animal.type().equals(Animal.Type.FISH)).max(Comparator.comparingInt(Animal::weight))
             .orElse(null);
     }

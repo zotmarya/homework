@@ -497,14 +497,16 @@ public class AnimalHandlerTest {
         return Stream.of(
             arguments(
                 List.of(
+                    List.of(
                     new Animal("Raven Claw Junior", Animal.Type.FISH, Animal.Sex.F, 4, 20, 50, true),
                     new Animal("Poppy", Animal.Type.DOG, Animal.Sex.M, 3, 50, 20, true),
                     new Animal("Shazam", Animal.Type.FISH, Animal.Sex.M, 3, 50, 20, true)
-                ),
-                List.of(
-                    new Animal("Shadow", Animal.Type.DOG, Animal.Sex.M, 3, 50, 120, true),
-                    new Animal("Jumper", Animal.Type.FISH, Animal.Sex.M, 3, 50, 220, true),
-                    new Animal("Feather", Animal.Type.FISH, Animal.Sex.M, 3, 50, 320, false)
+                    ),
+                    List.of(
+                        new Animal("Shadow", Animal.Type.DOG, Animal.Sex.M, 3, 50, 120, true),
+                        new Animal("Jumper", Animal.Type.FISH, Animal.Sex.M, 3, 50, 220, true),
+                        new Animal("Feather", Animal.Type.FISH, Animal.Sex.M, 3, 50, 320, false)
+                    )
                 ),
                 new Animal("Feather", Animal.Type.FISH, Animal.Sex.M, 3, 50, 320, false)
             )
@@ -514,11 +516,10 @@ public class AnimalHandlerTest {
     @ParameterizedTest
     @MethodSource("animalsListAndHeaviestFish")
     void getHeaviestFish_WhenGivenListOfAnimals_ReturnsHeaviestFish(
-        List<Animal> animalsList1,
-        List<Animal> animalsList2,
+        List<List<Animal>> animalsList,
         Animal expectedFish
     ) {
-        Animal resultFish = AnimalHandler.getHeaviestFish(animalsList1, animalsList2);
+        Animal resultFish = AnimalHandler.getHeaviestFish(animalsList);
 
         assertThat(resultFish).isEqualTo(expectedFish);
     }
