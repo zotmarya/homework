@@ -33,15 +33,17 @@ public class SessionTimeAnalyzer {
         Pattern timePattern = Pattern.compile("(\\d{4}-\\d{2}-\\d{2}), (\\d{2}:\\d{2})");
         Matcher matcher = timePattern.matcher(dateTime);
 
-        if (!matcher.hasMatch()) {
+        if (!matcher.find()) {
             return null;
         }
 
-        matcher.find();
         String date1 = matcher.group(1);
         String time1 = matcher.group(2);
 
-        matcher.find();
+        if (!matcher.find()) {
+            return null;
+        }
+
         String date2 = matcher.group(1);
         String time2 = matcher.group(2);
 
