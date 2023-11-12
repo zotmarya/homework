@@ -1,17 +1,54 @@
 package edu.hw5.task1;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SessionTimeAnalyzer {
-    public static String calculateSessionTime(String startTime, String endTime) {
-        Pattern timePattern = Pattern.compile("%(\\d{4}-\\d{2}-\\d{2}), (\\d{2}:\\d{2})%");
+    public Duration calculateSessionTime(List<String> sessions) {
+        Duration[] sessionsTime = new Duration[sessions.size()];
 
+        for (int i = 0; i < sessionsTime.length; i++) {
+            sessionsTime[i] = findSessionTime(sessions.get(i));
+            if (sessionsTime[i] == null) {
+                return null;
+            }
+        }
 
+        Duration averageTime = sessionsTime[0];
 
-        return null;
+        for (int i = 1; i < sessionsTime.length; i++) {
+            averageTime = averageTime.plus(sessionsTime[i]);
+        }
+
+        averageTime = averageTime.dividedBy(sessionsTime.length);
+
+        return averageTime;
     }
 
-    public static void main(String[] args) {
-        calculateSessionTime("2022-03-12, 20:20 - 2022-03-12, 23:50", "2022-04-01, 21:30 - 2022-04-02, 01:20");
+    private static Duration findSessionTime(String dateTime) {
+        Pattern timePattern = Pattern.compile("(\\d{4}-\\d{2}-\\d{2}), (\\d{2}:\\d{2})");
+        Matcher matcher = timePattern.matcher(dateTime);
+
+        if (!matcher.hasMatch()) {
+            return null;
+        }
+
+        matcher.find();
+        String date1 = matcher.group(1);
+        String time1 = matcher.group(2);
+
+        matcher.find();
+        String date2 = matcher.group(1);
+        String time2 = matcher.group(2);
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime1 = LocalDateTime.parse(date1 + " " + time1, dateTimeFormatter);
+        LocalDateTime dateTime2 = LocalDateTime.parse(date2 + " " + time2, dateTimeFormatter);
+
+        return Duration.between(dateTime1, dateTime2);
     }
 }
