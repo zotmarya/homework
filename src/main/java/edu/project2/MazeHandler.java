@@ -7,22 +7,16 @@ public class MazeHandler {
     private static final int SEED_DEFAULT = -1;
     private static final String PATH_TO_FILE = "src/main/resources/project2/";
     private LinkedList<Point> wayToExit;
-    private Menu menu = new Menu();
-    private UserInputHandler inputHandler = new UserInputHandler();
-    private MazeGenerator mazeGeneratorRB = new MazeGeneratorRB();
-    private MazeGenerator mazeGeneratorEA = new MazeGeneratorEA();
-    private MazeSolver mazeSolverBF = new MazeSolverBF();
-    private MazeSolver mazeSolverDF = new MazeSolverDF();
-    private MazeView mazeView = new MazeView();
+    private final Menu menu = new Menu();
+    private final UserInputHandler inputHandler = new UserInputHandler();
+    private final MazeGenerator mazeGeneratorRB = new MazeGeneratorRB();
+    private final MazeGenerator mazeGeneratorEA = new MazeGeneratorEA();
+    private final MazeSolver mazeSolverBF = new MazeSolverBF();
+    private final MazeSolver mazeSolverDF = new MazeSolverDF();
+    private final MazeView mazeView = new MazeView();
     private Maze maze = null;
     private int actionChoice;
     private int optionChoice = -1;
-    private int horizontalCellsAmount;
-    private int verticalCellsAmount;
-
-    public LinkedList<Point> getWayToExit() {
-        return wayToExit;
-    }
 
     public void setWayToExit(LinkedList<Point> wayToExit) {
         this.wayToExit = wayToExit;
@@ -52,20 +46,16 @@ public class MazeHandler {
         return inputHandler;
     }
 
-    public int getOptionChoice() {
-        return optionChoice;
-    }
-
     public void setOptionChoice(int optionChoice) {
         this.optionChoice = optionChoice;
     }
 
     public void chooseMazeGeneration() {
         menu.askForHeightOfMaze();
-        verticalCellsAmount = inputHandler.makeIntChoice();
+        int verticalCellsAmount = inputHandler.makeIntChoice();
 
         menu.askForWidthOfMaze();
-        horizontalCellsAmount = inputHandler.makeIntChoice();
+        int horizontalCellsAmount = inputHandler.makeIntChoice();
 
         Maze tmpMaze;
 
