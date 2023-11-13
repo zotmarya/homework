@@ -5,17 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MazeGeneratorTest {
-
-    private MazeGenerator mazeGenerator;
-
-    @BeforeEach
-    void setUp() {
-        mazeGenerator = new MazeGenerator();
-    }
-
     @Test
     void createMazeRecursiveBacktracking_WhenPassingInvalidArguments_CreatesDefaultSizeMaze() {
-        Maze maze = mazeGenerator.createMazeRB(-1, 10, 1);
+        MazeGenerator mazeGeneratorRB = new MazeGeneratorRB();
+        Maze maze = mazeGeneratorRB.createMaze(-1, 10, 1);
 
         int mazeSize = maze.getVerticalCellsAmount();
 
@@ -24,7 +17,8 @@ public class MazeGeneratorTest {
 
     @Test
     void createMazeRecursiveBacktracking_WhenPassingValidArguments_CreatesCorrectSizeMaze() {
-        Maze maze = mazeGenerator.createMazeEA(30, 30, 1);
+        MazeGenerator mazeGeneratorEA = new MazeGeneratorEA();
+        Maze maze = mazeGeneratorEA.createMaze(30, 30, 1);
 
         int mazeSize = maze.getVerticalCellsAmount();
 
@@ -33,7 +27,8 @@ public class MazeGeneratorTest {
 
     @Test
     void createMazeEllerAlgorithm_WhenPassingInvalidArguments_CreatesDefaultSizeMaze() {
-        Maze maze = mazeGenerator.createMazeEA(-1, 10, 1);
+        MazeGenerator mazeGeneratorEA = new MazeGeneratorEA();
+        Maze maze = mazeGeneratorEA.createMaze(-1, 10, 1);
 
         int mazeSize = maze.getVerticalCellsAmount();
 
@@ -42,7 +37,8 @@ public class MazeGeneratorTest {
 
     @Test
     void createMazeEllerAlgorithm_WhenPassingValidArguments_CreatesCorrectSizeMaze() {
-        Maze maze = mazeGenerator.createMazeEA(20, 20, 1);
+        MazeGenerator mazeGeneratorEA = new MazeGeneratorEA();
+        Maze maze = mazeGeneratorEA.createMaze(20, 20, 1);
 
         int mazeSize = maze.getVerticalCellsAmount();
 
