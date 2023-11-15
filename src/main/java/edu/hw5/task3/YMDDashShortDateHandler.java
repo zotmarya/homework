@@ -5,8 +5,10 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 
 public class YMDDashShortDateHandler extends DateHandler {
+    private final static String DATE_PATTERN = "^(\\d{4})-(0?[1-9]|1\\d)-(0?[1-9]|[1-3]\\d)$";
+
     public YMDDashShortDateHandler() {
-        super("^(\\d{4})-(0?[1-9]|1\\d)-(0?[1-9]|[1-3]\\d)$");
+        super(DATE_PATTERN);
     }
 
     @SuppressWarnings("MagicNumber")

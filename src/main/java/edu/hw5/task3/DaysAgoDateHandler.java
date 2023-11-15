@@ -5,8 +5,10 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 
 public class DaysAgoDateHandler extends DateHandler {
+    private final static String DATE_PATTERN = "^1 day ago|(1\\d+|[2-9]\\d+) days ago$";
+
     public DaysAgoDateHandler() {
-        super("^1 day ago|(1\\d+|[2-9]\\d+) days ago$");
+        super(DATE_PATTERN);
     }
 
     @Override

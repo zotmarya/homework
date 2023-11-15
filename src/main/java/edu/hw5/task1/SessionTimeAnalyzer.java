@@ -8,6 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SessionTimeAnalyzer {
+
+    private final static String DATE_TIME_PATTERN = "(\\d{4}-\\d{2}-\\d{2}), (\\d{2}:\\d{2})";
+    private final static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
+
     public Duration calculateSessionTime(List<String> sessions) {
         Duration[] sessionsTime = new Duration[sessions.size()];
 
@@ -30,7 +34,7 @@ public class SessionTimeAnalyzer {
     }
 
     private static Duration findSessionTime(String dateTime) {
-        Pattern timePattern = Pattern.compile("(\\d{4}-\\d{2}-\\d{2}), (\\d{2}:\\d{2})");
+        Pattern timePattern = Pattern.compile(DATE_TIME_PATTERN);
         Matcher matcher = timePattern.matcher(dateTime);
 
         if (!matcher.find()) {
@@ -47,7 +51,7 @@ public class SessionTimeAnalyzer {
         String date2 = matcher.group(1);
         String time2 = matcher.group(2);
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
         LocalDateTime dateTime1 = LocalDateTime.parse(date1 + " " + time1, dateTimeFormatter);
         LocalDateTime dateTime2 = LocalDateTime.parse(date2 + " " + time2, dateTimeFormatter);
 

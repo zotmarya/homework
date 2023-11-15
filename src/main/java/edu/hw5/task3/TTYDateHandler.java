@@ -5,8 +5,10 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 
 public class TTYDateHandler extends DateHandler {
+    private final static String DATE_PATTERN = "^tomorrow|today|yesterday$";
+
     public TTYDateHandler() {
-        super("^tomorrow|today|yesterday$");
+        super(DATE_PATTERN);
     }
 
     @Override

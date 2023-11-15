@@ -13,6 +13,7 @@ public class FridayFinder {
     private final static int YEAR_UPPER_BOUND = 9999;
     private final static int THIRTEENTH = 13;
     private final static String START_OF_YEAR = "01-01-";
+    private final static String DATE_FORMAT = "dd-MM-yyyy";
 
     public List<LocalDate> findFridays13thByYear(int year) {
         if (year < 1 || year > YEAR_UPPER_BOUND) {
@@ -24,7 +25,7 @@ public class FridayFinder {
         String startYear = START_OF_YEAR + year;
         String nextYear = START_OF_YEAR + (year + 1);
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
         LocalDate currentDate = LocalDate.parse(startYear, dateTimeFormatter);
         LocalDate endDate = LocalDate.parse(nextYear, dateTimeFormatter);

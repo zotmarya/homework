@@ -5,8 +5,10 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 
 public class DMYSlashShortDateHandler extends DateHandler {
+    private final static String DATE_PATTERN = "^(0?[1-9]|1\\d)/(0?[1-9]|[1-3]\\d)/(\\d{2}$)";
+
     public DMYSlashShortDateHandler() {
-        super("^(0?[1-9]|1\\d)/(0?[1-9]|[1-3]\\d)/(\\d{2}$)");
+        super(DATE_PATTERN);
     }
 
     @SuppressWarnings("MagicNumber")
