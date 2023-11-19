@@ -6,12 +6,10 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,6 +43,8 @@ public class LogAnalyzer {
         .compile(
             "^(\\d+\\.\\d+\\.\\d+\\.\\d+) - - \\[(\\d+/[a-zA-Z]+/\\d+:\\d+:\\d+:\\d+ \\+\\d{4})] \"[a-zA-Z]+ (.+)"
                 + " .+\" (\\d{3}) (\\d+) \"-\" \".+\"$");
+
+    private static final String DATE_PATTERN = "dd/MMM/yyyy:HH:mm:ss Z";
 
     public LogAnalyzer(String[] info) {
         initializeInputInfoMap(info);
@@ -94,7 +94,7 @@ public class LogAnalyzer {
         // Date
         String date = matcher.group(2);
         OffsetDateTime dateTime =
-            OffsetDateTime.parse(date, DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss Z"));
+            OffsetDateTime.parse(date, DateTimeFormatter.ofPattern(DATE_PATTERN));
 
         if (dateTime.isBefore(OffsetDateTime.of(dateStart, LocalTime.MIN, ZoneOffset.UTC))
             || dateTime.isAfter(OffsetDateTime.of(dateEnd, LocalTime.MIN, ZoneOffset.UTC))) {
@@ -118,6 +118,7 @@ public class LogAnalyzer {
             requestedResources.put(source, 1);
         }
 
+        // Code info
         int code = Integer.valueOf(matcher.group(4));
         if (responseCodes.containsKey(code)) {
             Object[] info = responseCodes.get(code);

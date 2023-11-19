@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 public class ViewHandler {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final int DIGITAL_STORAGE = 1024;
 
     public void printGeneralInfo(Map<String, String> generalInfo) {
         LOGGER.info("#### Общая информация");
@@ -60,7 +61,9 @@ public class ViewHandler {
         LOGGER.info("Ресурс             Трафик, мб");
 
         for (Map.Entry<String, Integer> entry : resourceTraffic.entrySet()) {
-            LOGGER.info(entry.getKey() + ": " + String.format("%.2f",(double)entry.getValue()/1024/1024));
+            LOGGER.info(entry.getKey() + ": " + String.format(
+                "%.2f", (double) entry.getValue() / DIGITAL_STORAGE / DIGITAL_STORAGE
+            ));
         }
 
         LOGGER.info("");

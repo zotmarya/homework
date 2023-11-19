@@ -18,6 +18,7 @@ import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.stream.Stream;
 public class DataHandler {
 
     private static final String DIRECTORY = "src/main/resources/project3/";
+    private static final int DIGITAL_STORAGE = 1024;
 
     public boolean isFile(String requestedSource) {
         if (requestedSource.contains("://")) {
@@ -71,7 +73,7 @@ public class DataHandler {
                     stringBuilder.append((char) symbol);
                 }
             }
-        } catch (URISyntaxException | IOException | InterruptedException exception) {
+        } catch (URISyntaxException | IOException | InterruptedException | IllegalArgumentException exception) {
             logs = null;
         }
 
@@ -79,10 +81,11 @@ public class DataHandler {
     }
 
     public List<File> getFiles(String path) {
-        File directory = new File(System.getProperty("user.dir") + "/src");
+        File directory = new File(System.getProperty("user.dir"));
         FileSystem fileSystem = FileSystems.getDefault();
 
-        PathMatcher pathMatcher = fileSystem.getPathMatcher("glob:" + path);
+        PathMatcher pathMatcher = fileSystem.getPathMatcher("glob:" + "**/" + path);
+
 
         FileVisitOption fileVisitOption = FileVisitOption.FOLLOW_LINKS;
 
@@ -150,7 +153,8 @@ public class DataHandler {
             bufferedWriter.write("#### Траффик ресурсов\n");
             bufferedWriter.write("Ресурс             Трафик, мб");
             for (Map.Entry<String, Integer> entry : logAnalyzer.getResourceTraffic().entrySet()) {
-                bufferedWriter.write(entry.getKey() + ": " + String.format("%.2f",(double)entry.getValue()/1024/1024) + "\n");
+                bufferedWriter.write(entry.getKey() + ": "
+                    + String.format("%.2f", (double) entry.getValue() / DIGITAL_STORAGE / DIGITAL_STORAGE) + "\n");
             }
 
             bufferedWriter.write("\n");
