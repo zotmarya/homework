@@ -18,17 +18,19 @@ import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DataHandler {
 
     private static final String DIRECTORY = "src/main/resources/project3/";
     private static final int DIGITAL_STORAGE = 1024;
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public boolean isFile(String requestedSource) {
         if (requestedSource.contains("://")) {
@@ -86,16 +88,14 @@ public class DataHandler {
 
         PathMatcher pathMatcher = fileSystem.getPathMatcher("glob:" + "**/" + path);
 
-
         FileVisitOption fileVisitOption = FileVisitOption.FOLLOW_LINKS;
 
         List<File> files = new ArrayList<>();
 
         try (Stream<Path> stream = Files.walk(directory.toPath(), fileVisitOption)) {
             stream.filter(pathMatcher::matches).forEach(file -> files.add(file.toFile()));
-        } catch (
-            IOException exception) {
-
+        } catch (IOException exception) {
+            LOGGER.info(exception);
         }
 
         return files;
@@ -115,7 +115,7 @@ public class DataHandler {
                     logs.add(log);
                 }
             } catch (IOException exception) {
-
+                LOGGER.info(exception);
             }
         }
 

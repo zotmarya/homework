@@ -119,7 +119,7 @@ public class LogAnalyzer {
         }
 
         // Code info
-        int code = Integer.valueOf(matcher.group(4));
+        int code = Integer.parseInt(matcher.group(4));
         if (responseCodes.containsKey(code)) {
             Object[] info = responseCodes.get(code);
             info[1] = (Integer) info[1] + 1;
@@ -166,8 +166,9 @@ public class LogAnalyzer {
         StringBuilder fileNames = new StringBuilder();
 
         for (File file : files) {
-            fileNames.append("'" + file.getName() + "'");
-            fileNames.append(" ");
+            fileNames.append("'");
+            fileNames.append(file.getName());
+            fileNames.append("' ");
         }
 
         generalInfo.put(SOURCE, fileNames.toString());
