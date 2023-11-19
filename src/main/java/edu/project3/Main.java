@@ -20,14 +20,11 @@ public class Main {
 
         viewHandler.printGeneralInfo(logAnalyzer.getGeneralInfo());
         viewHandler.printRequestedResources(logAnalyzer.getRequestedResources());
+        viewHandler.printResourceTraffic(logAnalyzer.getResourceTraffic());
         viewHandler.printCodes(logAnalyzer.getResponseCodes());
+        viewHandler.printIps(logAnalyzer.getIpSortedTop());
 
-        handler.createReportFile(
-            logAnalyzer.getGeneralInfo(),
-            logAnalyzer.getRequestedResources(),
-            logAnalyzer.getResponseCodes(),
-            logAnalyzer.getFormat()
-        );
+        handler.createReportFile(logAnalyzer);
     }
 
     private Main() {

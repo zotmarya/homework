@@ -119,13 +119,9 @@ public class DataHandler {
         return logs;
     }
 
-    public boolean createReportFile(
-        Map<String, String> generalInfo,
-        Map<String, Integer> requestedResources,
-        Map<Integer, Object[]> responseCodes,
-        String format
-    ) {
+    public boolean createReportFile(LogAnalyzer logAnalyzer) {
         String extension = ".txt";
+        String format = logAnalyzer.getFormat();
 
         if ("markdown".equals(format)) {
             extension = "mk";
@@ -139,23 +135,39 @@ public class DataHandler {
 
             bufferedWriter.write("#### Общая информация\n");
             bufferedWriter.write("Метрика            Значение\n");
-            for (Map.Entry<String, String> entry : generalInfo.entrySet()) {
+            for (Map.Entry<String, String> entry : logAnalyzer.getGeneralInfo().entrySet()) {
                 bufferedWriter.write(entry.getKey() + ": " + entry.getValue() + "\n");
             }
 
             bufferedWriter.write("\n");
             bufferedWriter.write("#### Запрашиваемые ресурсы\n");
             bufferedWriter.write("Ресурс            Количество\n");
-            for (Map.Entry<String, Integer> entry : requestedResources.entrySet()) {
+            for (Map.Entry<String, Integer> entry : logAnalyzer.getRequestedResources().entrySet()) {
                 bufferedWriter.write(entry.getKey() + ": " + entry.getValue() + "\n");
+            }
+
+            bufferedWriter.write("\n");
+            bufferedWriter.write("#### Траффик ресурсов\n");
+            bufferedWriter.write("Ресурс             Трафик, мб");
+            for (Map.Entry<String, Integer> entry : logAnalyzer.getResourceTraffic().entrySet()) {
+                bufferedWriter.write(entry.getKey() + ": " + String.format("%.2f",(double)entry.getValue()/1024/1024) + "\n");
             }
 
             bufferedWriter.write("\n");
             bufferedWriter.write("#### Коды ответа\n");
             bufferedWriter.write("Код        Имя         Количество\n");
-            for (Map.Entry<Integer, Object[]> entry : responseCodes.entrySet()) {
+            for (Map.Entry<Integer, Object[]> entry : logAnalyzer.getResponseCodes().entrySet()) {
                 bufferedWriter.write(entry.getKey() + ": " + entry.getValue()[0] + " " + entry.getValue()[1] + "\n");
             }
+
+            bufferedWriter.write("\n");
+            bufferedWriter.write("#### Топ частоты запросов с айпи\n");
+            bufferedWriter.write("Место   IP             Количество\n");
+            int place = 1;
+            for (Map.Entry<String, Integer> entry : logAnalyzer.getIpSortedTop()) {
+                bufferedWriter.write(place++ + "\t" + entry.getKey() + ":\t\t" + entry.getValue() + "\n");
+            }
+
         } catch (IOException exception) {
             return false;
         }

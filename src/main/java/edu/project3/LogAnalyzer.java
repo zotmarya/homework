@@ -6,9 +6,12 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +23,9 @@ public class LogAnalyzer {
     private HashMap<String, String> generalInfo;
     private HashMap<String, Integer> requestedResources;
     private HashMap<Integer, Object[]> responseCodes;
+    private HashMap<String, Integer> ipFrequency;
+    private HashMap<String, Integer> resourceTraffic;
+    private List<Map.Entry<String, Integer>> ipSortedTop;
     private LocalDate dateStart = LocalDate.MIN;
     private LocalDate dateEnd = LocalDate.MAX;
     private long logsAmount = 0L;
@@ -44,6 +50,8 @@ public class LogAnalyzer {
         initializeInputInfoMap(info);
         responseCodes = new HashMap<>();
         requestedResources = new HashMap<>();
+        ipFrequency = new HashMap<>();
+        resourceTraffic = new HashMap<>();
     }
 
     public void setLogs(List<String> logs) {
@@ -70,16 +78,19 @@ public class LogAnalyzer {
             Matcher matcher = LOG_PATTERN.matcher(logLine);
 
             if (matcher.find()) {
-                parseLog(matcher);
+                parseLogLine(matcher);
             }
         }
 
         avgSize /= logs.size();
         generalInfo.put(AVG_RESPONSE_SIZE, avgSize + "b");
         generalInfo.put(REQUESTS_AMOUNT, String.valueOf(logsAmount));
+        ipSortedTop =
+            ipFrequency.entrySet().stream().sorted((entry1, entry2) -> entry2.getValue() - entry1.getValue()).limit(10)
+                .toList();
     }
 
-    public void parseLog(Matcher matcher) {
+    public void parseLogLine(Matcher matcher) {
         // Date
         String date = matcher.group(2);
         OffsetDateTime dateTime =
@@ -93,6 +104,11 @@ public class LogAnalyzer {
         logsAmount++;
 
         String ip = matcher.group(1);
+        if (ipFrequency.containsKey(ip)) {
+            ipFrequency.put(ip, ipFrequency.get(ip) + 1);
+        } else {
+            ipFrequency.put(ip, 1);
+        }
 
         // Requested sources amount
         String source = matcher.group(3);
@@ -136,8 +152,13 @@ public class LogAnalyzer {
         }
 
         int size = Integer.valueOf(matcher.group(5));
-
         avgSize += size;
+
+        if (resourceTraffic.containsKey(source)) {
+            resourceTraffic.put(source, resourceTraffic.get(source) + size);
+        } else {
+            resourceTraffic.put(source, size);
+        }
     }
 
     public void setFileNames(List<File> files) {
@@ -190,5 +211,13 @@ public class LogAnalyzer {
 
     public HashMap<Integer, Object[]> getResponseCodes() {
         return responseCodes;
+    }
+
+    public List<Map.Entry<String, Integer>> getIpSortedTop() {
+        return ipSortedTop;
+    }
+
+    public HashMap<String, Integer> getResourceTraffic() {
+        return resourceTraffic;
     }
 }
