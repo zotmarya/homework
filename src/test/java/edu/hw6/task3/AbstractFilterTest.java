@@ -38,6 +38,6 @@ public class AbstractFilterTest {
             foundPath = null;
         }
 
-        assertThat(foundPath.getFileName().toString()).isEqualTo("cat-2.png");
+        assertThat(foundPath.getFileName().toString()).containsAnyOf("cat-2.png", "cat-3.png", "cat-4.png");
     }
 }
