@@ -12,7 +12,7 @@ public class PortInfo {
     }
 
     @Override public String toString() {
-        return "PortInfo{protocol='" + protocol + "\', port=" + port + ", service='" + service + "\'}";
+        return "PortInfo{protocol='" + protocol + "', port=" + port + ", service='" + service + "'}";
     }
 
     public int getPort() {
