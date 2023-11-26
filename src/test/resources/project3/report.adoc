@@ -1,0 +1,40 @@
+#### Общая информация
+Метрика            Значение
+start_time: 2015-05-27
+sources: https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs
+end_time: -
+requests_amount: 23709
+avg_response_size: 286979b
+
+#### Запрашиваемые ресурсы
+Ресурс            Количество
+/downloads/product_3: 37
+/downloads/product_1: 14208
+/downloads/product_2: 9464
+
+#### Траффик ресурсов
+Ресурс             Трафик, мб/downloads/product_3: 59.06
+/downloads/product_1: 457.78
+/downloads/product_2: 1279.54
+
+#### Коды ответа
+Код        Имя         Количество
+304: Not Modified 6041
+416: Unknown Code 2
+403: Forbidden 11
+404: Not Found 15731
+200: OK 1839
+206: Unknown Code 85
+
+#### Топ частоты запросов с айпи
+Место   IP             Количество
+1	216.46.173.126:		1200
+2	180.179.174.219:		872
+3	65.39.197.164:		710
+4	84.208.15.12:		530
+5	79.136.114.202:		468
+6	80.91.33.133:		467
+7	119.252.76.162:		458
+8	74.125.60.158:		433
+9	204.77.168.241:		395
+10	209.216.233.52:		240
