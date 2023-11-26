@@ -15,6 +15,7 @@ public class HackerNews {
     private static final String NEWS_INFO_URL = "https://hacker-news.firebaseio.com/v0/item/";
     private static final String JSON_EXT = ".json";
     private static final String TITLE_REGEX = "\"title\":\"([^\"]+)\"";
+    private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
 
     public long[] hackerNewsTopStories() {
         long[] newsIds;
@@ -26,7 +27,7 @@ public class HackerNews {
                 .build();
 
             HttpResponse<String> response =
-                HttpClient.newHttpClient().send(httpRequest, HttpResponse.BodyHandlers.ofString());
+                HTTP_CLIENT.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
             String receivedText = response.body();
             String[] news = receivedText.substring(1, receivedText.length() - 1).split(",");
@@ -55,7 +56,7 @@ public class HackerNews {
                 .build();
 
             HttpResponse<String> response =
-                HttpClient.newHttpClient().send(httpRequest, HttpResponse.BodyHandlers.ofString());
+                HTTP_CLIENT.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
             String receivedText = response.body();
 
