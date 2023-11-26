@@ -29,27 +29,19 @@ public class PortsScanner {
 
     public List<PortInfo> scanPorts(int lowerBound, int upperBound) {
         List<PortInfo> ports = new ArrayList<>();
-        boolean isTCPAvailable;
-        boolean isUDPAvailable;
+        boolean isTCPInUse;
+        boolean isUDPInUse;
 
         for (int port = 0; port < PORTS_AMOUNT; port++) {
-            try (ServerSocket serverSocket = new ServerSocket(port)) {
-                isTCPAvailable = true;
-            } catch (IOException exception) {
-                isTCPAvailable = false;
-            }
+            isTCPInUse = isTCPAvailable(port);
 
-            try (DatagramSocket datagramSocket = new DatagramSocket(port)) {
-                isUDPAvailable = true;
-            } catch (SocketException exception) {
-                isUDPAvailable = false;
-            }
+            isUDPInUse = isUDPAvailable(port);
 
-            if (isTCPAvailable && isUDPAvailable) {
+            if (isTCPInUse && isUDPInUse) {
                 ports.add(new PortInfo(TCP_UDP, port, AVAILABLE));
-            } else if (!isTCPAvailable && !isUDPAvailable) {
+            } else if (!isTCPInUse && !isUDPInUse) {
                 ports.add(new PortInfo(TCP_UDP, port, PORT_SERVICE_MAP.get(port)));
-            } else if (isTCPAvailable) {
+            } else if (isTCPInUse) {
                 ports.add(new PortInfo(TCP, port, AVAILABLE));
                 ports.add(new PortInfo(UDP, port, PORT_SERVICE_MAP.get(port)));
             } else {
@@ -65,5 +57,29 @@ public class PortsScanner {
         }
 
         return ports;
+    }
+
+    private boolean isTCPAvailable(int port) {
+        boolean isAvailable;
+
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            isAvailable = true;
+        } catch (IOException exception) {
+            isAvailable = false;
+        }
+
+        return isAvailable;
+    }
+
+    private boolean isUDPAvailable(int port) {
+        boolean isAvailable;
+
+        try (DatagramSocket datagramSocket = new DatagramSocket(port)) {
+            isAvailable = true;
+        } catch (SocketException exception) {
+            isAvailable = false;
+        }
+
+        return isAvailable;
     }
 }
