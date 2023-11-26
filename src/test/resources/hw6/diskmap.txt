@@ -1,0 +1,4 @@
+horse:3
+cat:1
+rabbit:4
+dog:2
