@@ -35,7 +35,6 @@ public class DataHandler {
     private static final String GLOB = "glob:";
     private static final String MARKDOWN = "markdown";
     private static final String ADOC = "adoc";
-    private static final String PATH_TO_RESOURCES = System.getProperty(KEY_DIRECTORY) + "/" + DIRECTORY;
     private static final int DIGITAL_STORAGE = 1024;
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -89,12 +88,12 @@ public class DataHandler {
         return logs;
     }
 
-    public List<File> getFiles(String path) {
-        File directory = new File(PATH_TO_RESOURCES);
+    public List<File> getFiles(String path, String regexPath) {
+        File directory = new File(System.getProperty(KEY_DIRECTORY) + "/" + path);
 
         FileSystem fileSystem = FileSystems.getDefault();
 
-        PathMatcher pathMatcher = fileSystem.getPathMatcher(GLOB + "**/" + path);
+        PathMatcher pathMatcher = fileSystem.getPathMatcher(GLOB + "**/" + regexPath);
 
         FileVisitOption fileVisitOption = FileVisitOption.FOLLOW_LINKS;
 

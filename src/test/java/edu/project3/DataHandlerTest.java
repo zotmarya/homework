@@ -51,7 +51,7 @@ public class DataHandlerTest {
     void getFiles_WhenGivenPath_ReturnsListOfFiles() {
         String filePath = "logs/**/2023-08-31.txt";
 
-        List<File> logs = dataHandler.getFiles(PATH + filePath);
+        List<File> logs = dataHandler.getFiles(PATH, filePath);
 
         assertThat(logs.get(0).getName()).isEqualTo("2023-08-31.txt");
     }

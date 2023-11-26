@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 
 public class Main {
+    private static final String DIRECTORY = "src/main/resources/project3/";
+
     public static void main(String[] args) {
         ViewHandler viewHandler = new ViewHandler();
         DataHandler handler = new DataHandler();
@@ -11,7 +13,7 @@ public class Main {
         LogAnalyzer logAnalyzer = new LogAnalyzer(args);
 
         if (handler.isFile(filePath)) {
-            List<File> files = handler.getFiles(filePath);
+            List<File> files = handler.getFiles(DIRECTORY, filePath);
             logAnalyzer.setLogs(handler.getLogsFromFiles(files));
             logAnalyzer.setFileNames(files);
         } else {
