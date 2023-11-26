@@ -61,8 +61,6 @@ public class LogAnalyzer {
     }
 
     private void analyzeLogs() {
-        Iterator<String> iterator = logs.iterator();
-
         String start = inputInfo.get(FROM);
         if (!NONE.equals(start)) {
             dateStart = LocalDate.parse(start);
@@ -72,6 +70,8 @@ public class LogAnalyzer {
         if (!NONE.equals(end)) {
             dateEnd = LocalDate.parse(end);
         }
+
+        Iterator<String> iterator = logs.iterator();
 
         while (iterator.hasNext()) {
             String logLine = iterator.next();
@@ -84,10 +84,17 @@ public class LogAnalyzer {
 
         avgSize /= logs.size();
         generalInfo.put(AVG_RESPONSE_SIZE, avgSize + "b");
+
         generalInfo.put(REQUESTS_AMOUNT, String.valueOf(logsAmount));
-        ipSortedTop =
-            ipFrequency.entrySet().stream().sorted((entry1, entry2) -> entry2.getValue() - entry1.getValue()).limit(10)
-                .toList();
+
+        ipSortedTop = getSortedIpTop();
+    }
+
+    private List<Map.Entry<String, Integer>> getSortedIpTop() {
+        return ipFrequency.entrySet().stream()
+            .sorted((entry1, entry2) -> entry2.getValue() - entry1.getValue())
+            .limit(10)
+            .toList();
     }
 
     public void parseLogLine(Matcher matcher) {
@@ -96,30 +103,46 @@ public class LogAnalyzer {
         OffsetDateTime dateTime =
             OffsetDateTime.parse(date, DateTimeFormatter.ofPattern(DATE_PATTERN));
 
-        if (dateTime.isBefore(OffsetDateTime.of(dateStart, LocalTime.MIN, ZoneOffset.UTC))
-            || dateTime.isAfter(OffsetDateTime.of(dateEnd, LocalTime.MIN, ZoneOffset.UTC))) {
+        if (isDateNotInRange(dateTime)) {
             return;
         }
 
         logsAmount++;
 
         String ip = matcher.group(1);
+        saveIP(ip);
+
+        // Requested sources amount
+        String source = matcher.group(3);
+        saveResource(source);
+
+        // Code info
+        int code = Integer.parseInt(matcher.group(4));
+        saveCode(code);
+
+        int size = Integer.valueOf(matcher.group(5));
+        avgSize += size;
+
+        saveTraffic(source, size);
+    }
+
+    private void saveIP(String ip) {
         if (ipFrequency.containsKey(ip)) {
             ipFrequency.put(ip, ipFrequency.get(ip) + 1);
         } else {
             ipFrequency.put(ip, 1);
         }
+    }
 
-        // Requested sources amount
-        String source = matcher.group(3);
+    private void saveResource(String source) {
         if (requestedResources.containsKey(source)) {
             requestedResources.put(source, requestedResources.get(source) + 1);
         } else {
             requestedResources.put(source, 1);
         }
+    }
 
-        // Code info
-        int code = Integer.parseInt(matcher.group(4));
+    private void saveCode(int code) {
         if (responseCodes.containsKey(code)) {
             Object[] info = responseCodes.get(code);
             info[1] = (Integer) info[1] + 1;
@@ -151,15 +174,19 @@ public class LogAnalyzer {
 
             responseCodes.put(code, info);
         }
+    }
 
-        int size = Integer.valueOf(matcher.group(5));
-        avgSize += size;
-
+    private void saveTraffic(String source, int size) {
         if (resourceTraffic.containsKey(source)) {
             resourceTraffic.put(source, resourceTraffic.get(source) + size);
         } else {
             resourceTraffic.put(source, size);
         }
+    }
+
+    private boolean isDateNotInRange(OffsetDateTime dateTime) {
+        return dateTime.isBefore(OffsetDateTime.of(dateStart, LocalTime.MIN, ZoneOffset.UTC))
+            || dateTime.isAfter(OffsetDateTime.of(dateEnd, LocalTime.MIN, ZoneOffset.UTC));
     }
 
     public void setFileNames(List<File> files) {

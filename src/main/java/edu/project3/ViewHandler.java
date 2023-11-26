@@ -62,7 +62,7 @@ public class ViewHandler {
 
         for (Map.Entry<String, Integer> entry : resourceTraffic.entrySet()) {
             LOGGER.info(entry.getKey() + ": " + String.format(
-                "%.2f", (double) entry.getValue() / DIGITAL_STORAGE / DIGITAL_STORAGE
+                "%.6f", (double) entry.getValue() / DIGITAL_STORAGE / DIGITAL_STORAGE
             ));
         }
 
