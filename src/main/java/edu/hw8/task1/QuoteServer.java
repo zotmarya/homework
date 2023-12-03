@@ -65,9 +65,7 @@ public class QuoteServer {
     private String getWord(InputStream inputStream) throws IOException {
         byte[] wordBytes = inputStream.readNBytes(inputStream.available());
 
-        String word = new String(wordBytes, StandardCharsets.UTF_8).trim();
-
-        return word;
+        return new String(wordBytes, StandardCharsets.UTF_8).trim();
     }
 
     public String getQuote(String word) {

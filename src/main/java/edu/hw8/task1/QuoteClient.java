@@ -37,9 +37,7 @@ public class QuoteClient {
     private String getQuote(InputStream inputStream) throws IOException {
         byte[] receivedBytes = inputStream.readAllBytes();
 
-        String quote = new String(receivedBytes, StandardCharsets.UTF_8);
-
-        return quote;
+        return new String(receivedBytes, StandardCharsets.UTF_8);
     }
 
 }

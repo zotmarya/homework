@@ -30,6 +30,7 @@ public class PasswordBreaker {
         }
 
         charIndexes = new int[MAX_SYMBOLS_AMOUNT];
+        userPasswordMap = new HashMap<>();
         hashUserMap = new HashMap<>();
 
         for (int i = 0, size = usersInfo.size(); i < size; i++) {
@@ -62,9 +63,17 @@ public class PasswordBreaker {
         Thread[] threads = new Thread[threadsAmount];
 
         for (int i = 0; i < threadsAmount; i++) {
-            threads[i] = new Thread(() -> {
-                singleThreadPasswordBreak();
-            });
+            threads[i] = new Thread(() -> singleThreadPasswordBreak());
+
+            threads[i].start();
+        }
+
+        try {
+            for (int i = 0; i < threadsAmount; i++) {
+                threads[i].join();
+            }
+        } catch (InterruptedException exception) {
+            LOGGER.info(exception);
         }
 
         return userPasswordMap;

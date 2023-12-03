@@ -1,13 +1,12 @@
 package edu.hw8.task3;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class PasswordBreakerTest {
 
@@ -28,7 +27,7 @@ public class PasswordBreakerTest {
             "v.v.belov   d8578edf8458ce06fbc5bb76a58c5ca4",
             "a.s.ivanov  482c811da5d5b4bc6d497ffa98491e38",
             "k.p.maslov  ab56b4d92b40713acc5af89985d4b786"
-            ));
+        ));
 
         PasswordBreaker passwordBreaker = new PasswordBreaker(info);
 

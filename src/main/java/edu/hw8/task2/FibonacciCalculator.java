@@ -2,8 +2,12 @@ package edu.hw8.task2;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class FibonacciCalculator {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static long calculateFibonacciNumber(int number) {
         if (number <= 1) {
@@ -14,14 +18,17 @@ public class FibonacciCalculator {
     }
 
     public static Long[] calculateWithThreads(int numberPosition, int threadsAmount) {
-        ThreadPool threadPool = FixedThreadPool.createFixedThreadPool(threadsAmount);
         List<Long> numbers = new ArrayList<>();
 
-        threadPool.execute(() -> {
-            numbers.add(calculateFibonacciNumber(numberPosition));
-        });
+        try (ThreadPool threadPool = FixedThreadPool.createFixedThreadPool(threadsAmount)) {
+            threadPool.execute(() -> {
+                numbers.add(calculateFibonacciNumber(numberPosition));
+            });
 
-        threadPool.start();
+            threadPool.start();
+        } catch (Exception exception) {
+            LOGGER.info(exception);
+        }
 
         return numbers.toArray(new Long[0]);
     }
