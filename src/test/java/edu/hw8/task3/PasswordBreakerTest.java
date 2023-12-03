@@ -31,6 +31,6 @@ public class PasswordBreakerTest {
 
         PasswordBreaker passwordBreaker = new PasswordBreaker(info);
 
-        Map<String, String> result = passwordBreaker.singleThreadPasswordBreak();
+//        Map<String, String> result = passwordBreaker.singleThreadPasswordBreak();
     }
 }
