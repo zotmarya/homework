@@ -13,23 +13,27 @@ public class PasswordBreaker {
     private Map<String, String> hashUserMap;
     private Map<String, String> userPasswordMap;
 
-    private static final int MAX_SYMBOLS_AMOUNT = 4;
+    private static final int SYMBOLS_AMOUNT = 4;
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String CHARSET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private MessageDigest messageDigest;
     private int[] charIndexes;
     private int currentCharPosition;
-    private static final String SPLIT_REGEX = "\\\\s+";
+    private int passwordsAmount;
+    private static final String SPLIT_REGEX = "\\\s+";
+    private static final String MD5 = "MD5";
 
     public PasswordBreaker(List<String> usersInfo) {
 
         try {
-            messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest = MessageDigest.getInstance(MD5);
         } catch (NoSuchAlgorithmException exception) {
             LOGGER.info(exception);
         }
 
-        charIndexes = new int[MAX_SYMBOLS_AMOUNT];
+        passwordsAmount = (int) Math.pow(CHARSET.length(), SYMBOLS_AMOUNT);
+
+        charIndexes = new int[SYMBOLS_AMOUNT];
         userPasswordMap = new HashMap<>();
         hashUserMap = new HashMap<>();
 
@@ -41,12 +45,12 @@ public class PasswordBreaker {
     }
 
     public Map<String, String> singleThreadPasswordBreak() {
-        while (!hashUserMap.isEmpty()) {
-            String password = nextPassword();
+        for (int i = 0; i < passwordsAmount && !hashUserMap.isEmpty(); i++) {
+            String password = nextPassword(i);
 
 //            System.out.println("PASSWORD " + password);
 
-            String hash = hashPasswordMD5(password);
+            String hash = hashPasswordMD5(password, messageDigest);
 
 //            System.out.println("HASH " + hash);
 
@@ -62,8 +66,12 @@ public class PasswordBreaker {
     public Map<String, String> multiThreadPasswordBreak(int threadsAmount) {
         Thread[] threads = new Thread[threadsAmount];
 
+        int part = passwordsAmount / threadsAmount;
+
         for (int i = 0; i < threadsAmount; i++) {
-            threads[i] = new Thread(() -> singleThreadPasswordBreak());
+            int index = i;
+
+            threads[i] = new Thread(() -> threadPasswordBreak(part, index));
 
             threads[i].start();
         }
@@ -79,33 +87,47 @@ public class PasswordBreaker {
         return userPasswordMap;
     }
 
-    private String nextPassword() {
-        StringBuilder password = new StringBuilder();
+    public void threadPasswordBreak(int part, int threadNumber) {
+        int startIndex = threadNumber * part;
+        int endIndex = startIndex + part;
 
-        for (int i = 0; i < MAX_SYMBOLS_AMOUNT; i++) {
-            password.append(CHARSET.charAt(charIndexes[i]));
+        try {
+            MessageDigest md = MessageDigest.getInstance(MD5);
+
+            for (int i = threadNumber * part; i < endIndex && !hashUserMap.isEmpty(); i++) {
+                String password = nextPassword(i);
+
+                String hash = hashPasswordMD5(password, md);
+
+                if (hashUserMap.containsKey(hash)) {
+                    String user = hashUserMap.remove(hash);
+                    userPasswordMap.put(user, password);
+                }
+            }
+        } catch (NoSuchAlgorithmException exception) {
+            LOGGER.info(exception);
         }
 
-        increaseIndex();
+    }
+
+    private String nextPassword(int passwordNumber) {
+        StringBuilder password = new StringBuilder();
+
+        int tmpPassNum = passwordNumber;
+        int charsAmount = CHARSET.length();
+
+        for (int i = 0; i < SYMBOLS_AMOUNT; i++) {
+            int index = tmpPassNum % charsAmount;
+            tmpPassNum = (tmpPassNum - index) / charsAmount;
+
+            password.append(CHARSET.charAt(index));
+        }
 
         return password.toString();
     }
 
-    private synchronized void increaseIndex() {
-        if (charIndexes[currentCharPosition] == CHARSET.length() - 1) {
-            charIndexes[currentCharPosition] = 0;
+    private String hashPasswordMD5(String password, MessageDigest messageDigest) {
 
-            if (currentCharPosition == MAX_SYMBOLS_AMOUNT - 1) {
-                currentCharPosition = 0;
-            } else {
-                currentCharPosition++;
-            }
-        } else {
-            charIndexes[currentCharPosition]++;
-        }
-    }
-
-    private String hashPasswordMD5(String password) {
         messageDigest.update(password.getBytes());
 
         byte[] hashBytes = messageDigest.digest();

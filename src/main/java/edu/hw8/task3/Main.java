@@ -11,10 +11,10 @@ public class Main {
 
     public static void main(String[] args) {
         List<String> info = new ArrayList<>(List.of(
-            "a.v.petrov  827ccb0eea8a706c4c34a16891f84e7b",
-            "v.v.belov   d8578edf8458ce06fbc5bb76a58c5ca4",
-            "a.s.ivanov  482c811da5d5b4bc6d497ffa98491e38",
-            "k.p.maslov  ab56b4d92b40713acc5af89985d4b786"
+            "a.v.petrov  0832c1202da8d382318e329a7c133ea0",
+            "v.v.belov   81dc9bdb52d04dc20036dbd8313ed055",
+            "a.s.ivanov  e2fc714c4727ee9395f324cd2e7f331f",
+            "k.p.maslov  ee49fde835bb1b2238d1aa6883c2a32c"
         ));
 
         PasswordBreaker passwordBreaker = new PasswordBreaker(info);
