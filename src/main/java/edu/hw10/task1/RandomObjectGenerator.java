@@ -116,7 +116,7 @@ public class RandomObjectGenerator {
         return instance;
     }
 
-    private Object generateValue(Field field) throws Exception {
+    private Object generateValue(Field field) {
         Object value;
 
         if (field.isAnnotationPresent(NotNull.class)) {
