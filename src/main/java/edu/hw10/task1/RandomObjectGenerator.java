@@ -174,7 +174,7 @@ public class RandomObjectGenerator {
         return value;
     }
 
-    private Object generateValueWithNullPossibility(Class<?> fieldType, Field field) throws Exception {
+    private Object generateValueWithNullPossibility(Class<?> fieldType, Field field) {
         Object value;
 
         if (shouldReturnNull() && !fieldType.isPrimitive()) {
